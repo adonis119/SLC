@@ -11,6 +11,7 @@ public class SLC extends AppThread {
     private int pollingTime;
     private MBox barcodeReaderMBox;
     private MBox touchDisplayMBox;
+	private String currentScene = "Blank";
 
     //------------------------------------------------------------
     // SLC
@@ -70,5 +71,44 @@ public class SLC extends AppThread {
     // processMouseClicked
     private void processMouseClicked(Msg msg) {
 	// *** process mouse click here!!! ***
+		String splitClickedPointed[] = msg.getDetails().split(" ");
+		int clickedPositionX = Integer.parseInt(splitClickedPointed[0]);
+		int clickedPositionY = Integer.parseInt(splitClickedPointed[1]);
+		log.info("MouseX: " + splitClickedPointed[0]);
+		log.info("MouseY: " + splitClickedPointed[1]);
+		switch(currentScene){
+			case "Blank":
+				// If user click the blank scene, direct to MainMenu, and set currentScene to "MainMenu"
+				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+				currentScene = "MainMenu";
+				break;
+			case "MainMenu":
+				log.info("Clicked on MainMenu");
+				// Click on Pick up x= 0~300(left=0,width=300), y= 270~340(bottom=140, height=70)
+				if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=270 && clickedPositionY<=340){
+					log.info("Clicked Pick up delivery");
+					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+					currentScene = "Confirmation";
+				} else if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=270 && clickedPositionY<=340) {
+					// Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
+					log.info("Clicked Store delivery");
+				}else if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=340 && clickedPositionY<=410) {
+					// Click on Admin login x= 0~300(left=0,width=300), y=340~410(bottom=70, height=70)
+					log.info("Clicked Admin login");
+				}else if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=340 && clickedPositionY<=410) {
+					// Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=70, height=70)
+					log.info("Clicked Refund");
+				}
+				break;
+			case "Confirmation":
+				log.info("Clicked on Confirmation");
+				break;
+			default:
+				break;
+		}
+
+
+
+
     } // processMouseClicked
 } // SLC

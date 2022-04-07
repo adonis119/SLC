@@ -5,11 +5,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
     <children>
         <AnchorPane prefHeight="480.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20">
             <children>
+                <Text text="Welcome to Smart Locker" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="100" style="-fx-font: 40 arial"/>
+                <Text text="Click the scene to start" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="110" style="-fx-font: 40 arial"/>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" />
             </children>
         </AnchorPane>
