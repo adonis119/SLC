@@ -11,7 +11,7 @@ public class SLC extends AppThread {
     private int pollingTime;
     private MBox barcodeReaderMBox;
     private MBox touchDisplayMBox;
-	private String currentScene = "Blank";
+	private String currentScene = "BlankScreen";
 	private String passcodeInput ="";
 
     //------------------------------------------------------------
@@ -41,14 +41,21 @@ public class SLC extends AppThread {
 		    log.info("MouseCLicked: " + msg.getDetails());
 		    processMouseClicked(msg);
 		    break;
-
+		case TD_UpdateDisplay:
+			// Update currentScene first (For the right bottom selection hacking scene or normal update display)
+			log.info("DisplayUpdated: " + msg.getDetails());
+			this.currentScene = msg.getDetails();
+			break;
 		case TimesUp:
 		    Timer.setTimer(id, mbox, pollingTime);
 		    log.info("Poll: " + msg.getDetails());
 		    barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 		    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 		    break;
-
+		case BR_BarcodeRead:
+			log.info("Received Barcode " + msg.getDetails());
+			touchDisplayMBox.send(msg);
+			break;
 		case PollAck:
 		    log.info("PollAck: " + msg.getDetails());
 		    break;
@@ -77,11 +84,12 @@ public class SLC extends AppThread {
 		int clickedPositionY = Integer.parseInt(splitClickedPointed[1]);
 		log.info("MouseX: " + splitClickedPointed[0]);
 		log.info("MouseY: " + splitClickedPointed[1]);
+
 		switch(currentScene){
-			case "Blank":
+			case "BlankScreen":
 				// If user click the blank scene, direct to MainMenu, and set currentScene to "MainMenu"
 				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-				currentScene = "MainMenu";
+                // currentScene = "MainMenu";
 				break;
 			case "MainMenu":
 				log.info("Clicked on MainMenu");
@@ -89,10 +97,12 @@ public class SLC extends AppThread {
 				if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=270 && clickedPositionY<=340){
 					log.info("Clicked Pick up delivery");
 					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
-					currentScene = "Confirmation";
 				} else if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=270 && clickedPositionY<=340) {
 					// Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
 					log.info("Clicked Store delivery");
+					// Activate Barcode reader for scan barcode
+					barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoActive,""));
+					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
 				}else if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=340 && clickedPositionY<=410) {
 					// Click on Admin login x= 0~300(left=0,width=300), y=340~410(bottom=70, height=70)
 					log.info("Clicked Admin login");
@@ -103,12 +113,28 @@ public class SLC extends AppThread {
 				break;
 			case "Confirmation":
 				log.info("Clicked on Confirmation");
+				// Check footer button
+				if(clickedPositionY>=390&&clickedPositionY<=430){
+					// Clicked footer
+					if(clickedPositionX>=105&&clickedPositionX<=265){
+						//Clicked Enter
+						//TO-DO check passcode from locker
+						log.info("Clicked on Enter");
+						passcodeInput ="";
+					}else if (clickedPositionX>=380&&clickedPositionX<=540){
+						//Clicked Back to Menu
+						log.info("Clicked on Back");
+						passcodeInput ="";
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+						currentScene = "MainMenu";
+					}
+				}
 				// Check clicked number input
 				// Check the clicked of del first, since only del can click when passcode already have 8 digits
 				if(clickedPositionY>=315&&clickedPositionY<=355&&clickedPositionX>=382&&clickedPositionX<=442)
 				{
 						log.info("Clicked Del");
-						if(passcodeInput!="") {
+						if(passcodeInput!=""&&passcodeInput.length()>0) {
 							passcodeInput = passcodeInput.substring(0, passcodeInput.length() - 1);
 						}
 				}

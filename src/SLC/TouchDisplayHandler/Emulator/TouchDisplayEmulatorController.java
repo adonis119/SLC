@@ -25,6 +25,7 @@ public class TouchDisplayEmulatorController {
     public ChoiceBox screenSwitcherCBox;
     public ChoiceBox pollRespCBox;
     public Text passcodeInputBox;
+    public Text barcodeInputBox;
 
 
     //------------------------------------------------------------
@@ -58,6 +59,9 @@ public class TouchDisplayEmulatorController {
 
                     case "Confirmation":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+                        break;
+                    case "Store Delivery":
+                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
                         break;
                 }
             }
@@ -93,4 +97,8 @@ public class TouchDisplayEmulatorController {
     public void td_updatePasscodeInput(String passcodeInput){
             this.passcodeInputBox.setText(passcodeInput);
     } // update passcode input when slc send a msg to update it
+
+    public void td_updateBarcodeInput(String barcodeInput){
+            this.barcodeInputBox.setText(barcodeInput);
+    } // update barcode input when slc send a msg to update it
 } // TouchDisplayEmulatorController

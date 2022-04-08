@@ -59,6 +59,7 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
         // fixme
 	super.handleGoActive();
 	barcodeReaderEmulatorController.appendTextArea("Barcode Reader Activated");
+    barcodeReaderEmulatorController.goActive();
     } // handleGoActive
 
 

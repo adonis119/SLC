@@ -61,6 +61,7 @@
                             <String fx:value="Blank" />
                             <String fx:value="Main Menu" />
                             <String fx:value="Confirmation" />
+                            <String fx:value="Store Delivery" />
                         </FXCollections>
                     </items>
                 </ChoiceBox>
