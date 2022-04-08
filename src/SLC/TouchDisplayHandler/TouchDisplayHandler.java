@@ -26,7 +26,9 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_UpdateDisplay:
                 handleUpdateDisplay(msg);
                 break;
-
+            case TD_UpdatePasscodeInput:
+                handleUpdatePasscodeInput(msg);
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -46,4 +48,8 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
+
+    protected void handleUpdatePasscodeInput(Msg msg){
+        log.info(id + ": update passcode input -- " + msg.getDetails());
+    }// Handle update passcode input box value when user click the number on the display screen
 } // TouchDisplayHandler

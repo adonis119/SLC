@@ -125,4 +125,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 break;
         }
     } // handlePoll
+    protected void handleUpdatePasscodeInput(Msg msg){
+        touchDisplayEmulatorController.td_updatePasscodeInput(msg.getDetails());
+    }// Handle update passcode input box value when user click the number on the display screen
 } // TouchDisplayEmulator

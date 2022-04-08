@@ -94,5 +94,7 @@ public class Msg {
         /** Barcode Reader Go Activate */	BR_GoActive,
         /** Barcode Reader Go Standby */	BR_GoStandby,
         /** Card inserted */			BR_BarcodeRead,
+       /**Part of we added Msg*/
+       /** Update passcode Input*/ TD_UpdatePasscodeInput,
     } // Type
 } // Msg

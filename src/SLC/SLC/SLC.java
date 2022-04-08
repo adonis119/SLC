@@ -12,6 +12,7 @@ public class SLC extends AppThread {
     private MBox barcodeReaderMBox;
     private MBox touchDisplayMBox;
 	private String currentScene = "Blank";
+	private String passcodeInput ="";
 
     //------------------------------------------------------------
     // SLC
@@ -102,6 +103,68 @@ public class SLC extends AppThread {
 				break;
 			case "Confirmation":
 				log.info("Clicked on Confirmation");
+				// Check clicked number input
+				// Check the clicked of del first, since only del can click when passcode already have 8 digits
+				if(clickedPositionY>=315&&clickedPositionY<=355&&clickedPositionX>=382&&clickedPositionX<=442)
+				{
+						log.info("Clicked Del");
+						if(passcodeInput!="") {
+							passcodeInput = passcodeInput.substring(0, passcodeInput.length() - 1);
+						}
+				}
+				if(passcodeInput.length()>=8){
+					// if already have 8 digits, not check the number click
+					return;
+				}
+				if(clickedPositionY>=150&&clickedPositionY<=190)
+				{
+					//clicked first row, check x
+					if(clickedPositionX>=202&&clickedPositionX<=262){
+						log.info("Clicked 1");
+						passcodeInput +="1";
+					} else if(clickedPositionX>=292&&clickedPositionX<=352){
+						log.info("Clicked 2");
+						passcodeInput +="2";
+					} else if(clickedPositionX>=382&&clickedPositionX<=442){
+					log.info("Clicked 3");
+						passcodeInput +="3";
+					}
+				}
+				if(clickedPositionY>=205&&clickedPositionY<=245)
+				{
+					//clicked second row, check x
+					if(clickedPositionX>=202&&clickedPositionX<=262){
+						log.info("Clicked 4");
+						passcodeInput +="4";
+					} else if(clickedPositionX>=292&&clickedPositionX<=352){
+						log.info("Clicked 5");
+						passcodeInput +="5";
+					} else if(clickedPositionX>=382&&clickedPositionX<=442){
+						log.info("Clicked 6");
+						passcodeInput +="6";
+					}
+				}
+				if(clickedPositionY>=260&&clickedPositionY<=300)
+				{
+					//clicked 3rd row, check x
+					if(clickedPositionX>=202&&clickedPositionX<=262){
+						log.info("Clicked 7");
+						passcodeInput +="7";
+					} else if(clickedPositionX>=292&&clickedPositionX<=352){
+						log.info("Clicked 8");
+						passcodeInput +="8";
+					} else if(clickedPositionX>=382&&clickedPositionX<=442){
+						log.info("Clicked 9");
+						passcodeInput +="9";
+					}
+				}
+				if(clickedPositionY>=315&&clickedPositionY<=355&&clickedPositionX>=292&&clickedPositionX<=352)
+				{
+						log.info("Clicked 0");
+						passcodeInput +="0";
+				}
+				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput,passcodeInput));
+				log.info(passcodeInput);
 				break;
 			default:
 				break;
