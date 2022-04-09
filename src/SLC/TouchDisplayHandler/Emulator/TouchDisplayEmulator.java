@@ -98,7 +98,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "Confirmation":
                 reloadStage("TouchDisplayConfirmation.fxml");
                 break;
-
+            case "StoreDelivery":
+                reloadStage("TouchDisplayStoreDelivery.fxml");
+                break;
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;
@@ -125,4 +127,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 break;
         }
     } // handlePoll
+    protected void handleUpdatePasscodeInput(Msg msg){
+        touchDisplayEmulatorController.td_updatePasscodeInput(msg.getDetails());
+    }// Handle update passcode input box value when user click the number on the display screen
+    protected void handleUpdateBarcodeInput(Msg msg){
+       touchDisplayEmulatorController.td_updateBarcodeInput(msg.getDetails());
+    }// Handle update barcode input when SLC send Barcode to TD
 } // TouchDisplayEmulator

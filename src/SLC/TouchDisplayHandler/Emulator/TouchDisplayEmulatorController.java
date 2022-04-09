@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 import java.util.logging.Logger;
 
@@ -23,6 +24,8 @@ public class TouchDisplayEmulatorController {
     private String pollResp;
     public ChoiceBox screenSwitcherCBox;
     public ChoiceBox pollRespCBox;
+    public Text passcodeInputBox;
+    public Text barcodeInputBox;
 
 
     //------------------------------------------------------------
@@ -57,6 +60,9 @@ public class TouchDisplayEmulatorController {
                     case "Confirmation":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
                         break;
+                    case "Store Delivery":
+                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
+                        break;
                 }
             }
         });
@@ -87,4 +93,12 @@ public class TouchDisplayEmulatorController {
 	log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
 	touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
+
+    public void td_updatePasscodeInput(String passcodeInput){
+            this.passcodeInputBox.setText(passcodeInput);
+    } // update passcode input when slc send a msg to update it
+
+    public void td_updateBarcodeInput(String barcodeInput){
+            this.barcodeInputBox.setText(barcodeInput);
+    } // update barcode input when slc send a msg to update it
 } // TouchDisplayEmulatorController

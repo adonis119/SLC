@@ -25,8 +25,14 @@ public class TouchDisplayHandler extends HWHandler {
 
             case TD_UpdateDisplay:
                 handleUpdateDisplay(msg);
+                slc.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, msg.getDetails()));
                 break;
-
+            case TD_UpdatePasscodeInput:
+                handleUpdatePasscodeInput(msg);
+                break;
+            case BR_BarcodeRead:
+                handleUpdateBarcodeInput(msg);
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -37,6 +43,7 @@ public class TouchDisplayHandler extends HWHandler {
     // handleUpdateDisplay
     protected void handleUpdateDisplay(Msg msg) {
 	log.info(id + ": update display -- " + msg.getDetails());
+
     } // handleUpdateDisplay
 
 
@@ -45,4 +52,11 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
+
+    protected void handleUpdatePasscodeInput(Msg msg){
+        log.info(id + ": update passcode input -- " + msg.getDetails());
+    }// Handle update passcode input box value when user click the number on the display screen
+    protected void handleUpdateBarcodeInput(Msg msg){
+        log.info(id + ": update barcode input -- " + msg.getDetails());
+    }// Handle update barcode input when SLC send Barcode to TD
 } // TouchDisplayHandler
