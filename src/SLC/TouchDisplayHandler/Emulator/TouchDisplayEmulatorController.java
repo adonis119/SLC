@@ -99,6 +99,9 @@ public class TouchDisplayEmulatorController {
     } // update passcode input when slc send a msg to update it
 
     public void td_updateBarcodeInput(String barcodeInput){
-            this.barcodeInputBox.setText(barcodeInput);
+        // Prevent user send barcode before the store delivery loaded
+            if(this.selectedScreen.compareTo("Store Delivery")==0) {
+                this.barcodeInputBox.setText(barcodeInput);
+            }
     } // update barcode input when slc send a msg to update it
 } // TouchDisplayEmulatorController

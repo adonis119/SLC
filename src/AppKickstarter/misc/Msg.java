@@ -96,5 +96,8 @@ public class Msg {
         /** Card inserted */			BR_BarcodeRead,
        /**Part of we added Msg*/
        /** Update passcode Input*/ TD_UpdatePasscodeInput,
+        /** Octopus Reader Go Activate */	OR_GoActive,
+        /** Octopus Reader Go Standby */	OR_GoStandby,
+        /** Octopus Card inserted */			OR_OctopusCardRead,
     } // Type
 } // Msg
