@@ -195,6 +195,19 @@ public class SLC extends AppThread {
 				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput,passcodeInput));
 				log.info(passcodeInput);
 				break;
+			case "StoreDelivery":{
+				//X: 415.0 Y:380.0
+				log.info("Store Delivery clicked");
+				if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=340 && clickedPositionY<=410)
+				{
+
+					log.info("Back button clicked!!");
+					barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoStandby,""));
+					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+					break;
+				}
+
+			}
 			default:
 				break;
 		}
