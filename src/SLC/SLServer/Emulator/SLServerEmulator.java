@@ -1,8 +1,8 @@
-package SLC.OctopusReaderDriver.Emulator;
+package SLC.SLServer.Emulator;
 
 import AppKickstarter.misc.Msg;
 import SLC.SLCStarter;
-import SLC.OctopusReaderDriver.OctopusReaderDriver;
+import SLC.SLServer.SLServerHandler;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -14,16 +14,16 @@ import javafx.stage.WindowEvent;
 
 
 //======================================================================
-// OctopusReaderDriver
-public class OctopusReaderEmulator extends OctopusReaderDriver {
+// SLServerEmulator
+public class SLServerEmulator extends SLServerHandler {
     private SLCStarter slcStarter;
     private String id;
     private Stage myStage;
-    private OctopusReaderEmulatorController octopusReaderEmulatorController;
+    private SLServerEmulatorController slServerEmulatorController;
 
     //------------------------------------------------------------
-    // OctopusReaderEmulator
-    public OctopusReaderEmulator(String id, SLCStarter slcStarter) {
+    // SLServerEmulator
+    public SLServerEmulator(String id, SLCStarter slcStarter) {
         super(id, slcStarter);
         this.slcStarter = slcStarter;
         this.id = id;
@@ -36,16 +36,16 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
         Parent root;
         myStage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        String fxmlName = "OctopusReaderEmulator.fxml";
-        loader.setLocation(OctopusReaderEmulator.class.getResource(fxmlName));
+        String fxmlName = "SLServerEmulator.fxml";
+        loader.setLocation(SLServerEmulator.class.getResource(fxmlName));
         root = loader.load();
-        octopusReaderEmulatorController = (OctopusReaderEmulatorController) loader.getController();
-        octopusReaderEmulatorController.initialize(id, slcStarter, log, this);
+        slServerEmulatorController = (SLServerEmulatorController) loader.getController();
+        slServerEmulatorController.initialize(id, slcStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
         myStage.setScene(new Scene(root, 350, 470));
-        myStage.setTitle("Octopus Reader");
+        myStage.setTitle("SL Server");
         // Set Pop up position of scene
-        myStage.setX(1100);
+        myStage.setX(700);
         myStage.setY(30);
         myStage.setResizable(false);
         myStage.setOnCloseRequest((WindowEvent event) -> {
@@ -57,30 +57,13 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
 
 
     //------------------------------------------------------------
-    // handleGoActive
-    protected void handleGoActive() {
-        // fixme
-        super.handleGoActive();
-        octopusReaderEmulatorController.appendTextArea("Octopus Reader Activated");
-        octopusReaderEmulatorController.goActive();
-    } // handleGoActive
-
-
-    //------------------------------------------------------------
-    // handleGoStandby
-    protected void handleGoStandby() {
-        // fixme
-        super.handleGoStandby();
-        octopusReaderEmulatorController.appendTextArea("Octopus Reader Standby");
-    } // handleGoStandby
-
-
+    //  Since SL server is not a device of SLC, It should not handle standby,active...etc.. from SLC, but because we test SL server by GUI, using HWhandler to emulate
     //------------------------------------------------------------
     // handlePoll
     protected void handlePoll() {
         // super.handlePoll();
 
-        switch (octopusReaderEmulatorController.getPollResp()) {
+        switch (slServerEmulatorController.getPollResp()) {
             case "ACK":
                 slc.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                 break;

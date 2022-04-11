@@ -98,6 +98,7 @@ public class Msg {
        /** Update passcode Input*/ TD_UpdatePasscodeInput,
         /** Octopus Reader Go Activate */	OR_GoActive,
         /** Octopus Reader Go Standby */	OR_GoStandby,
-        /** Octopus Card inserted */			OR_OctopusCardRead,
+        /** Octopus Card inserted */		OR_OctopusCardRead,
+        /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
     } // Type
 } // Msg

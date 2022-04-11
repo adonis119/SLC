@@ -136,10 +136,10 @@ public class OctopusReaderEmulatorController {
 
 
     //------------------------------------------------------------
-    // updateBarcodeReaderStatus
+
     private void updateOctopusReaderStatus(String status) {
         octopusReaderStatusField.setText(status);
-    } // updateBarcodeReaderStatus
+    }
 
 
     //------------------------------------------------------------
@@ -147,4 +147,4 @@ public class OctopusReaderEmulatorController {
     public void appendTextArea(String status) {
         octopusReaderTextArea.appendText(status+"\n");
     } // appendTextArea
-} // BarcodeReaderEmulatorController
+}

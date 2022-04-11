@@ -8,6 +8,7 @@ import SLC.SLC.SLC;
 import SLC.BarcodeReaderDriver.BarcodeReaderDriver;
 import SLC.TouchDisplayHandler.TouchDisplayHandler;
 import SLC.OctopusReaderDriver.OctopusReaderDriver;
+import SLC.SLServer.SLServerHandler;
 
 import javafx.application.Platform;
 
@@ -20,6 +21,7 @@ public class SLCStarter extends AppKickstarter {
     protected BarcodeReaderDriver barcodeReaderDriver;
     protected TouchDisplayHandler touchDisplayHandler;
 	protected OctopusReaderDriver octopusReaderDriver;
+	protected SLServerHandler sLServerHandler;
 
 
     //------------------------------------------------------------
@@ -59,6 +61,7 @@ public class SLCStarter extends AppKickstarter {
 	    barcodeReaderDriver = new BarcodeReaderDriver("BarcodeReaderDriver", this);
 	    touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
 		octopusReaderDriver = new OctopusReaderDriver("OctopusReaderDriver", this);
+		sLServerHandler = new SLServerHandler("SLServer", this);
 	} catch (Exception e) {
 	    System.out.println("AppKickstarter: startApp failed");
 	    e.printStackTrace();
@@ -71,6 +74,7 @@ public class SLCStarter extends AppKickstarter {
 	new Thread(barcodeReaderDriver).start();
 	new Thread(touchDisplayHandler).start();
 	new Thread(octopusReaderDriver).start();
+	new Thread(sLServerHandler).start();
     } // startHandlers
 
 
@@ -85,6 +89,7 @@ public class SLCStarter extends AppKickstarter {
 	barcodeReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	octopusReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+	// We don't stop SL Server when SLC stop since SL Server is not belong to SLC.
 	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
     } // stopApp
 } // SLCStarter

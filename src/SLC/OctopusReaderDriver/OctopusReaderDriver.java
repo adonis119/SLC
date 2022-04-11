@@ -12,7 +12,7 @@ public class OctopusReaderDriver extends HWHandler {
     // OctopusReaderDriver
     public OctopusReaderDriver (String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
-    } // BarcodeReaderDriver
+    }
 
 
     //------------------------------------------------------------
