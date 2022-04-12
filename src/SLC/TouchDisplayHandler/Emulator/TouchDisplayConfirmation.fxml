@@ -80,6 +80,7 @@
                             <String fx:value="Main Menu" />
                             <String fx:value="Confirmation" />
                             <String fx:value="Store Delivery" />
+                            <String fx:value="Open Locker Door" />
                         </FXCollections>
                     </items>
                 </ChoiceBox>

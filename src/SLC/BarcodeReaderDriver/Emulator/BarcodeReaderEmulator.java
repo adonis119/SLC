@@ -82,9 +82,11 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
         // super.handlePoll();
         switch (barcodeReaderEmulatorController.getPollResp()) {
             case "ACK":
+                log.info("sending ack");
                 slc.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                 break;
             case "NAK":
+                log.info("sending nak");
                 slc.send(new Msg(id, mbox, Msg.Type.PollNak, id + " is down!"));
                 break;
             case "Ignore":
