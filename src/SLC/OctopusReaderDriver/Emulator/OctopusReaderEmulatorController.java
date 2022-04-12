@@ -28,6 +28,7 @@ public class OctopusReaderEmulatorController {
     public TextField octopusCardField;
     public TextField octopusReaderStatusField;
     public TextField octopusAmountField;
+    public TextField requestedAmountField;
     public TextArea octopusReaderTextArea;
     public ChoiceBox standbyRespCBox;
     public ChoiceBox activationRespCBox;
@@ -67,6 +68,7 @@ public class OctopusReaderEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
+        requestedAmountField.setText(appKickstarter.getProperty("OctopusReader.Requested.Amount"));
     } // initialize
 
 
@@ -98,8 +100,13 @@ public class OctopusReaderEmulatorController {
 
             case "Send Octopus card":
                 // TO-DO cal the amount enough to get fee? If ok return success to get $$ message?
-                octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_OctopusCardRead, octopusCardField.getText()));
-                octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText()+"\n");
+                if (processPayment()) {
+                    // if payment success
+                    octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_OctopusCardRead, octopusCardField.getText()));
+                    octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText() + "\n");
+                } else {
+                    // if payment fail
+                }
                 break;
 
             case "Activate/Standby":
@@ -113,12 +120,39 @@ public class OctopusReaderEmulatorController {
         }
     } // buttonPressed
 
+    //------------------------------------------------------------
+    // Payment handling
+    private boolean processPayment() {
+        // change price text to double
+        double requestedAmount, octopusAmount;
+        String parseRequest, parseOctopus;
+        parseRequest = requestedAmountField.getText().substring(1);
+        parseOctopus = octopusAmountField.getText().substring(1);
+        requestedAmount = Double.parseDouble(parseRequest);
+        octopusAmount = Double.parseDouble(parseOctopus);
+
+        if (octopusAmount - requestedAmount < -50.0) {
+            return false; // if not enough money
+        }
+        // if enough money
+        octopusAmountField.setText("$ " + String.format("%.2f", (octopusAmount - requestedAmount)));
+
+        return true;
+    } // Payment handling
 
     //------------------------------------------------------------
     // getters
-    public String getActivationResp() { return activationResp; }
-    public String getStandbyResp()    { return standbyResp; }
-    public String getPollResp()       { return pollResp; }
+    public String getActivationResp() {
+        return activationResp;
+    }
+
+    public String getStandbyResp() {
+        return standbyResp;
+    }
+
+    public String getPollResp() {
+        return pollResp;
+    }
 
 
     //------------------------------------------------------------
@@ -145,6 +179,6 @@ public class OctopusReaderEmulatorController {
     //------------------------------------------------------------
     // appendTextArea
     public void appendTextArea(String status) {
-        octopusReaderTextArea.appendText(status+"\n");
+        octopusReaderTextArea.appendText(status + "\n");
     } // appendTextArea
 }
