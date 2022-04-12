@@ -74,6 +74,9 @@ public class SLC extends AppThread {
                     // Update currentScene first (For the right bottom selection hacking scene or normal update display)
                     log.info("DisplayUpdated: " + msg.getDetails());
                     this.currentScene = msg.getDetails();
+                    if(msg.getDetails().equals("AdminPage")){
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateAdminPage, lockers.toString()));
+                    }
                     break;
                 case TimesUp:
                     Timer.setTimer(id, mbox, pollingTime);
@@ -105,7 +108,7 @@ public class SLC extends AppThread {
                     switch (msg.getDetails()) {
                         case "1":
                             for (int i = 17; i <= 24; i++) {
-                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
+                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
                                     lockerId = lockers[i - 1].lockerID;
                                     index = i - 1;
                                     break;
@@ -114,7 +117,7 @@ public class SLC extends AppThread {
                             break;
                         case "2":
                             for (int i = 9; i <= 16; i++) {
-                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
+                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
                                     lockerId = lockers[i - 1].lockerID;
                                     index = i - 1;
                                     break;
@@ -123,7 +126,7 @@ public class SLC extends AppThread {
                             break;
                         case "3":
                             for (int i = 1; i <= 8; i++) {
-                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
+                                if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
                                     lockerId = lockers[i - 1].lockerID;
                                     index = i - 1;
                                     break;
@@ -408,6 +411,14 @@ public class SLC extends AppThread {
             case "OpenLockerDoor":
                 log.info("Open Locker Door clicked");
                 break;
+            case "Payment":
+                if (clickedPositionY >= 390 && clickedPositionY <= 430&&clickedPositionX >= 380 && clickedPositionX <= 540) {
+                        //Clicked Back to Menu
+                        log.info("Clicked on Back");
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
+                        currentScene = "BlankScreen";
+                }
+                break;
             default:
                 break;
         }
@@ -437,7 +448,6 @@ public class SLC extends AppThread {
     private class locker {
         int doorStatus = 0; //0: the door is closed. 1: the door is closed.
         int emptyStatus = 0; //0: the locker is empty. 1: the locker is not empty.
-        int bookingStatus = 0; //0: the locker is not booked. 1: the locker is booked.
         String lockerID; // 3 different size (1: small, 2: medium, 3: big)
         String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
         int size = 1;

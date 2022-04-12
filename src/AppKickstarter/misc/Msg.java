@@ -114,5 +114,6 @@ public class Msg {
         /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker,
         /** SLServer create an order */         SLS_CreateDeliveryOrder,
         /** SLServer create an order */         SLS_ReplyDeliveryOrderFor,
+        /** Update the admin lockers status*/ TD_UpdateAdminPage,
     } // Type
 } // Msg

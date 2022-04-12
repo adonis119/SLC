@@ -55,6 +55,9 @@ public class TouchDisplayHandler extends HWHandler {
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Pick");
                 break;
+            case TD_UpdateAdminPage:
+                log.info("Handler update admin status");
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -92,5 +95,8 @@ public class TouchDisplayHandler extends HWHandler {
     }
     protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick){
         log.info(id + ": update opened locker door title type:  " + storeOrPick);
+    }
+    protected void handleShowPaymentError(Msg msg){
+        log.info(id + ": update payment error and show  " + msg.getDetails());
     }
 } // TouchDisplayHandler
