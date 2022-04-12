@@ -94,5 +94,11 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
                 break;
         }
     } // handlePoll
+
+    //------------------------------------------------------------
+    // Accept payment amount
+    protected void updateAmount(Msg msg) {
+        octopusReaderEmulatorController.updateAmount(msg.getDetails());
+    } // Accept payment amount
 }
 

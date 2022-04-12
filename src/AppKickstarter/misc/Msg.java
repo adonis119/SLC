@@ -98,6 +98,7 @@ public class Msg {
        /** Update passcode Input*/ TD_UpdatePasscodeInput,
         /** Octopus Reader Go Activate */	OR_GoActive,
         /** Octopus Reader Go Standby */	OR_GoStandby,
+        /** Octopus Payment Amount */		OR_PaymentAmount,
         /** Octopus Card inserted */		OR_OctopusCardRead,
         /** Octopus Payment Failed */ OR_PaymentFailed,
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,

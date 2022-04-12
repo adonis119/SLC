@@ -30,7 +30,7 @@
                 <Label layoutY="43.0" prefHeight="23.0" prefWidth="125.0" text="Octopus amount: " AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="43.0" />
                 <TextField fx:id="octopusAmountField" layoutX="125.0" layoutY="39.0" prefHeight="30.0" prefWidth="185.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0" />
             <Label layoutY="79.0" prefHeight="20.0" prefWidth="125.0" text="Requested amount:" />
-            <TextField fx:id="requestedAmountField" layoutX="125.0" layoutY="76.0" prefHeight="25.0" prefWidth="185.0" />
+            <TextField fx:id="requestedAmountField" editable="false" layoutX="125.0" layoutY="76.0" prefHeight="25.0" prefWidth="185.0" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="20.0" layoutY="200.0" prefHeight="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="200.0">

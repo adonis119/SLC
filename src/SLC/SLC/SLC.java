@@ -127,11 +127,15 @@ public class SLC extends AppThread {
 				// Octopus
 				case OR_OctopusCardRead:
 					log.info("Payment success! The octopus card number is " + msg.getDetails());
+					// move below line to request octopus payment
+					octopusReaderMBox.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, "$ 500.00")));
 					break;
 				case OR_PaymentFailed:
 					log.info("Payment Failed! Please make sure to have at least " + msg.getDetails());
 					break;
-
+				case OR_PaymentAmount:
+					log.info("Payment sent to Octopus Reader:" + msg.getDetails());
+					break;
 				// Locker
 				case Locker_op:
 					log.info("The Locker is opened. " + msg.getDetails());
