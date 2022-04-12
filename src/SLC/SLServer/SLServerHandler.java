@@ -45,6 +45,10 @@ public class SLServerHandler extends HWHandler {
             case SLS_ReplyOpenLocker:
                 slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, msg.getDetails()));
                 break;
+            case SLS_RequestAmount:
+                log.info("SLServer receive LockerID from SLC " +msg.getDetails());
+                slc.send((new Msg(id, mbox, Msg.Type.SLS_ReplyAmount, "Amount $999")));
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
