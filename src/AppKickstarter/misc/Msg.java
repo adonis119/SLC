@@ -102,7 +102,7 @@ public class Msg {
         /** Octopus Card inserted */		OR_OctopusCardRead,
         /** Octopus Payment Failed */ OR_PaymentFailed,
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
-        /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrder,
+        /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrderForGui,
         /** SLServer reply to open new locker*/ SLS_ReplyOpenLocker,
         /** call locker to open locker*/        OpenLocker,
         /** Locker opened */		Locker_op,
@@ -112,6 +112,8 @@ public class Msg {
         /** Locker status is opened*/		Locker_st_o,
         /** PassCode is not correct, show to user */ passCode_wrong,
         /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker,
+        /** SLServer create an order */         SLS_CreateDeliveryOrder,
+        /** SLServer create an order */         SLS_ReplyDeliveryOrderFor,
         /** Update the admin lockers status*/ TD_UpdateAdminPage,
     } // Type
 } // Msg
