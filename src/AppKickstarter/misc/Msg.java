@@ -101,5 +101,11 @@ public class Msg {
         /** Octopus Card inserted */		OR_OctopusCardRead,
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
         /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrder,
+        /** SLServer reply to open new locker*/ SLS_ReplyOpenLocker,
+        /** Locker opened */		Locker_op,
+        /** Locker closed */		Locker_cl,
+        /** Locker check status */		Locker_st,
+        /** Locker status is closed */		Locker_st_c,
+        /** Locker status is opened*/		Locker_st_o,
     } // Type
 } // Msg

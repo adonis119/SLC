@@ -11,6 +11,8 @@ import SLC.OctopusReaderDriver.OctopusReaderDriver;
 import SLC.OctopusReaderDriver.Emulator.OctopusReaderEmulator;
 import SLC.SLServer.SLServerHandler;
 import SLC.SLServer.Emulator.SLServerEmulator;
+import SLC.LockerHandler.Emulator.LockerEmulator;
+import SLC.LockerHandler.LockerHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -55,6 +57,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    TouchDisplayEmulator touchDisplayEmulator = null;
         OctopusReaderEmulator octopusReaderEmulator = null;
         SLServerEmulator sLServerEmulator = null;
+        LockerEmulator lockerEmulator = null;
 
 	    // create emulators
 	    try {
@@ -64,12 +67,13 @@ public class SLCEmulatorStarter extends SLCStarter {
 	        touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", slcEmulatorStarter);
             octopusReaderEmulator = new OctopusReaderEmulator("OctopusReaderDriver", slcEmulatorStarter);
             sLServerEmulator = new SLServerEmulator("SLServer", slcEmulatorStarter);
-
+            lockerEmulator = new LockerEmulator("LockerHandler", slcEmulatorStarter);
 		// start emulator GUIs
                 barcodeReaderEmulator.start();
 		        touchDisplayEmulator.start();
                 octopusReaderEmulator.start();
                 sLServerEmulator.start();
+                lockerEmulator.start();
 	    } catch (Exception e) {
 		System.out.println("Emulators: start failed");
 		e.printStackTrace();
@@ -81,6 +85,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    slcEmulatorStarter.setTouchDisplayHandler(touchDisplayEmulator);
         slcEmulatorStarter.setOctopusReaderDriver(octopusReaderEmulator);
         slcEmulatorStarter.setSLServerHandler(sLServerEmulator);
+        slcEmulatorStarter.setLockerHandler(lockerEmulator);
 
 	    // start threads
 	    new Thread(timer).start();
@@ -89,6 +94,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    new Thread(touchDisplayEmulator).start();
         new Thread(octopusReaderEmulator).start();
         new Thread(sLServerEmulator).start();
+        new Thread(lockerEmulator).start();
 	} // start
     } // Emulators
 
@@ -112,5 +118,8 @@ public class SLCEmulatorStarter extends SLCStarter {
     }
     private void setSLServerHandler(SLServerHandler sLServerHandler){
         this.sLServerHandler = sLServerHandler;
+    }
+    private void setLockerHandler(LockerHandler lockerHandler){
+        this.lockerHandler = lockerHandler;
     }
 } // SLCEmulatorStarter

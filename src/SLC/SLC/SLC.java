@@ -4,6 +4,8 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
+import java.awt.*;
+
 
 //======================================================================
 // SLC
@@ -13,14 +15,17 @@ public class SLC extends AppThread {
     private MBox touchDisplayMBox;
 	private MBox octopusReaderMBox;
 	private MBox sLServerMbox;
+	private MBox lockerMBox;
 	private String currentScene = "BlankScreen";
 	private String passcodeInput ="";
+	private locker[] lockers = new locker[24];
+	private String currentBarCode;
 
     //------------------------------------------------------------
     // SLC
     public SLC(String id, AppKickstarter appKickstarter) throws Exception {
-	super(id, appKickstarter);
-	pollingTime = Integer.parseInt(appKickstarter.getProperty("SLC.PollingTime"));
+		super(id, appKickstarter);
+		pollingTime = Integer.parseInt(appKickstarter.getProperty("SLC.PollingTime"));
     } // SLC
 
 
@@ -34,6 +39,17 @@ public class SLC extends AppThread {
 	touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
 	octopusReaderMBox = appKickstarter.getThread("OctopusReaderDriver").getMBox();
 	sLServerMbox = appKickstarter.getThread("SLServer").getMBox();
+	lockerMBox = appKickstarter.getThread("LockerHandler").getMBox();
+
+	for (int i = 1; i<=24;i++){
+		//big size locker : id(1-8)
+		//medium size locker : id(9-16)
+		//small size locker : id(17-22)
+		String id = "lockerID" + i;
+		if(i<9)lockers[i-1] = new locker(id,3);
+		else if(i<17)lockers[i-1] = new locker(id,2);
+		else lockers[i-1] = new locker(id,1);
+	}
 
 	for (boolean quit = false; !quit;) {
 	    Msg msg = mbox.receive();
@@ -57,28 +73,76 @@ public class SLC extends AppThread {
 		    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 			octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 			sLServerMbox.send(new Msg(id,mbox,Msg.Type.Poll,""));
-		    break;
+			lockerMBox.send(new Msg(id,mbox,Msg.Type.Poll,""));
+			break;
 		case BR_BarcodeRead:
 			log.info("Received Barcode " + msg.getDetails());
-			//send message to touchDisplay
 			touchDisplayMBox.send(msg);
 			break;
 		case SLS_GetDeliveryOrder:
 			log.info("SLC receive the barcode from touch display " + msg.getDetails());
 			sLServerMbox.send(msg);
 			break;
-			case SLS_ReplyDeliveryOrder:
-				log.info("SLC receive the reply from server " + msg.getDetails());
-				touchDisplayMBox.send(msg);
-				break;
-			case PollAck:
+		case SLS_ReplyDeliveryOrder:
+			log.info("SLC receive the reply from server " + msg.getDetails());
+			touchDisplayMBox.send(msg);
+			break;
+		case SLS_ReplyOpenLocker:
+			log.info("SLC call locker open a empty locker with size: " + msg.getDetails());
+			String lockerId = "";
+			switch (msg.getDetails()) {
+				case "1":
+					for(int i=17;i<=24;i++){
+						if(lockers[i-1].emptyStatus==0&&lockers[i-1].doorStatus==0){
+							lockerId = lockers[i-1].lockerID;
+							break;
+						}
+					}
+					break;
+				case "2":
+					for(int i=9;i<=16;i++){
+						if(lockers[i-1].emptyStatus==0&&lockers[i-1].doorStatus==0){
+							lockerId = lockers[i-1].lockerID;
+							break;
+						}
+					}
+					break;
+				case "3":
+					for(int i=1;i<=8;i++){
+						if(lockers[i-1].emptyStatus==0&&lockers[i-1].doorStatus==0){
+							lockerId = lockers[i-1].lockerID;
+							break;
+						}
+					}
+					break;
+			}
+			lockerMBox.send(new Msg(id,mbox,Msg.Type.SLS_ReplyOpenLocker,lockerId));
+			break;
+		case PollAck:
 		    log.info("PollAck: " + msg.getDetails());
 		    break;
-
+		case Locker_op:
+			log.info("The Locker is opened. " + msg.getDetails());
+			//lockerMBox.send(msg);
+			break;
+		case Locker_cl:
+			log.info("The Locker is closed.  " + msg.getDetails());
+			//lockerMBox.send(msg);
+			break;
+		case Locker_st:
+			log.info("Check Locker status.  " + msg.getDetails());
+			//lockerMBox.send(msg);
+			break;
+		case Locker_st_c:
+			log.info(msg.getDetails());
+			break;
+		case Locker_st_o:
+			log.info(msg.getDetails());
+			//lockerMBox.send(msg);
+			break;
 		case Terminate:
 		    quit = true;
 		    break;
-
 		default:
 		    log.warning(id + ": unknown message type: [" + msg + "]");
 	    }
@@ -212,7 +276,6 @@ public class SLC extends AppThread {
 				log.info("Store Delivery clicked");
 				if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=340 && clickedPositionY<=410)
 				{
-
 					log.info("Back button clicked!!");
 					barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoStandby,""));
 					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -228,4 +291,16 @@ public class SLC extends AppThread {
 
 
     } // processMouseClicked
+
+	private class locker{
+		int doorStatus = 0; //0: the door is closed. 1: the door is closed.
+		int emptyStatus =  0; //0: the locker is empty. 1: the locker is not empty.
+		String lockerID; // 3 different size (1: small, 2: medium, 3: big)
+
+		int size = 1;
+		locker(String lockerID,int size){
+			this.lockerID = lockerID;
+			this.size = size;
+		}
+	}
 } // SLC

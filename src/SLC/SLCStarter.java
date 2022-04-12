@@ -4,6 +4,7 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
 
+import SLC.LockerHandler.LockerHandler;
 import SLC.SLC.SLC;
 import SLC.BarcodeReaderDriver.BarcodeReaderDriver;
 import SLC.TouchDisplayHandler.TouchDisplayHandler;
@@ -22,6 +23,7 @@ public class SLCStarter extends AppKickstarter {
     protected TouchDisplayHandler touchDisplayHandler;
 	protected OctopusReaderDriver octopusReaderDriver;
 	protected SLServerHandler sLServerHandler;
+	protected LockerHandler lockerHandler;
 
 
     //------------------------------------------------------------
@@ -62,6 +64,8 @@ public class SLCStarter extends AppKickstarter {
 	    touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
 		octopusReaderDriver = new OctopusReaderDriver("OctopusReaderDriver", this);
 		sLServerHandler = new SLServerHandler("sLServerHandler", this);
+		lockerHandler = new LockerHandler("LockerHandler", this);
+
 	} catch (Exception e) {
 	    System.out.println("AppKickstarter: startApp failed");
 	    e.printStackTrace();
@@ -75,7 +79,9 @@ public class SLCStarter extends AppKickstarter {
 	new Thread(touchDisplayHandler).start();
 	new Thread(octopusReaderDriver).start();
 	new Thread(sLServerHandler).start();
-    } // startHandlers
+	new Thread(lockerHandler).start();
+
+	} // startHandlers
 
 
     //------------------------------------------------------------
@@ -89,7 +95,9 @@ public class SLCStarter extends AppKickstarter {
 	barcodeReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	octopusReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	// We don't stop SL Server when SLC stop since SL Server is not belong to SLC.
+	sLServerHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+	lockerHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+		// We don't stop SL Server when SLC stop since SL Server is not belong to SLC.
 	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
     } // stopApp
 } // SLCStarter
