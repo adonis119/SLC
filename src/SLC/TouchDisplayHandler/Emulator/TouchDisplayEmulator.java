@@ -102,6 +102,10 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "Maintenance":
                 reloadStage("TouchDisplayMaintenance.fxml");
                 break;
+            case "OpenLockerDoor":
+                reloadStage("TouchDisplayOpenLockerDoor.fxml");
+
+                break;
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;
@@ -137,4 +141,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     protected void handleUpdateServerReply(Msg msg){
         touchDisplayEmulatorController.td_updateServerReply(msg.getDetails());
     }//
+    protected void handleUpdateOpenLockerDoorDisplay(Msg msg){
+        touchDisplayEmulatorController.td_updateOpenLockerDoorDisplay(msg.getDetails());
+    }
 } // TouchDisplayEmulator
