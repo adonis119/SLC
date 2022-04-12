@@ -27,6 +27,11 @@ public class OctopusReaderDriver extends HWHandler {
                 slc.send((new Msg(id, mbox, Msg.Type.OR_PaymentFailed, msg.getDetails())));
                 break;
 
+            case OR_PaymentAmount:
+                slc.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, msg.getDetails())));
+                updateAmount(msg);
+                break;
+
             case OR_GoActive:
                 handleGoActive();
                 break;
@@ -60,5 +65,11 @@ public class OctopusReaderDriver extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
+
+    //------------------------------------------------------------
+    // Accept payment amount
+    protected void updateAmount(Msg msg) {
+        log.info(msg.getDetails());
+    } // Accept payment amount
 } // OctopusReaderDriver
 

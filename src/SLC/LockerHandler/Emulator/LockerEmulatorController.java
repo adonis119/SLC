@@ -98,16 +98,18 @@ public class LockerEmulatorController {
 
     } // initialize
 
+
     //------------------------------------------------------------
     // buttonPressed
-    public void buttonPressed(ActionEvent actionEvent) throws IOException {
+    public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_st, btn.getId()));
+        //lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_st, btn.getId()));
         if(!btn.getText().equals("Closed")){
             btn.setText("Closed");
             lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_cl, btn.getId()));
         }
     } // buttonPressed
+
 
     public void lockerStatus(String lockerId){
         String status = "";
@@ -197,82 +199,105 @@ public class LockerEmulatorController {
     public void openLocker(String lockerId){
         switch(lockerId){
             case "lockerID1":
-                this.lockerID1.setText("Opened");
+                lockerID1.setStyle("-fx-background-color:");
+                lockerID1.setText("Opened");
                 break;
             case "lockerID2":
-                this.lockerID2.setText("Opened");
+                lockerID2.setStyle("-fx-background-color:");
+                lockerID2.setText("Opened");
                 break;
             case "lockerID3":
-                this.lockerID3.setText("Opened");
+                lockerID3.setStyle("-fx-background-color:");
+                lockerID3.setText("Opened");
                 break;
             case "lockerID4":
-                this.lockerID4.setText("Opened");
+                lockerID4.setStyle("-fx-background-color:");
+                lockerID4.setText("Opened");
                 break;
             case "lockerID5":
-                this.lockerID5.setText("Opened");
+                lockerID5.setStyle("-fx-background-color:");
+                lockerID5.setText("Opened");
                 break;
             case "lockerID6":
-                this.lockerID6.setText("Opened");
+                lockerID6.setStyle("-fx-background-color:");
+                lockerID6.setText("Opened");
                 break;
             case "lockerID7":
-                this.lockerID7.setText("Opened");
+                lockerID7.setStyle("-fx-background-color:");
+                lockerID7.setText("Opened");
                 break;
             case "lockerID8":
-                this.lockerID8.setText("Opened");
+                lockerID8.setStyle("-fx-background-color:");
+                lockerID8.setText("Opened");
                 break;
             case "lockerID9":
-                this.lockerID9.setText("Opened");
+                lockerID9.setStyle("-fx-background-color:");
+                lockerID9.setText("Opened");
                 break;
             case "lockerID10":
-                this.lockerID10.setText("Opened");
+                lockerID10.setStyle("-fx-background-color:");
+                lockerID10.setText("Opened");
                 break;
             case "lockerID11":
-                this.lockerID11.setText("Opened");
+                lockerID11.setStyle("-fx-background-color:");
+                lockerID11.setText("Opened");
                 break;
             case "lockerID12":
-                this.lockerID12.setText("Opened");
+                lockerID12.setStyle("-fx-background-color:");
+                lockerID12.setText("Opened");
                 break;
             case "lockerID13":
-                this.lockerID13.setText("Opened");
+                lockerID13.setStyle("-fx-background-color:");
+                lockerID13.setText("Opened");
                 break;
             case "lockerID14":
-                this.lockerID14.setText("Opened");
+                lockerID14.setStyle("-fx-background-color:");
+                lockerID14.setText("Opened");
                 break;
             case "lockerID15":
-                this.lockerID15.setText("Opened");
+                lockerID15.setStyle("-fx-background-color:");
+                lockerID15.setText("Opened");
                 break;
             case "lockerID16":
-                this.lockerID16.setText("Opened");
+                lockerID16.setStyle("-fx-background-color:");
+                lockerID16.setText("Opened");
                 break;
             case "lockerID17":
-                this.lockerID17.setText("Opened");
+                lockerID17.setStyle("-fx-background-color:");
+                lockerID17.setText("Opened");
                 break;
             case "lockerID18":
-                this.lockerID18.setText("Opened");
+                lockerID18.setStyle("-fx-background-color:");
+                lockerID18.setText("Opened");
                 break;
             case "lockerID19":
-                this.lockerID19.setText("Opened");
+                lockerID19.setStyle("-fx-background-color:");
+                lockerID19.setText("Opened");
                 break;
             case "lockerID20":
-                this.lockerID20.setText("Opened");
+                lockerID20.setStyle("-fx-background-color:");
+                lockerID20.setText("Opened");
                 break;
             case "lockerID21":
-                this.lockerID21.setText("Opened");
+                lockerID21.setStyle("-fx-background-color:");
+                lockerID21.setText("Opened");
                 break;
             case "lockerID22":
-                this.lockerID22.setText("Opened");
+                lockerID22.setStyle("-fx-background-color:");
+                lockerID22.setText("Opened");
                 break;
             case "lockerID23":
-                this.lockerID23.setText("Opened");
+                lockerID23.setStyle("-fx-background-color:");
+                lockerID23.setText("Opened");
                 break;
             case "lockerID24":
-                this.lockerID24.setText("Opened");
+                lockerID24.setStyle("-fx-background-color:");
+                lockerID24.setText("Opened");
                 break;
         }
         lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_op, lockerId));
 
     }
-
 
     //------------------------------------------------------------
     // getters

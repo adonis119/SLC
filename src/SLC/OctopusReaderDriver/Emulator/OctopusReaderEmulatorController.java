@@ -68,6 +68,7 @@ public class OctopusReaderEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
+        // change below line for request octopus payment
         requestedAmountField.setText(appKickstarter.getProperty("OctopusReader.Requested.Amount"));
     } // initialize
 
@@ -103,6 +104,7 @@ public class OctopusReaderEmulatorController {
                 if (processPayment()) {
                     // if payment success
                     octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_OctopusCardRead, octopusCardField.getText()));
+                    octopusReaderTextArea.appendText("Payment success!\n Your remaining amount is " + octopusAmountField.getText() + "\n");
                     octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText() + "\n");
                 } else {
                     // if payment fail
@@ -182,4 +184,10 @@ public class OctopusReaderEmulatorController {
     public void appendTextArea(String status) {
         octopusReaderTextArea.appendText(status + "\n");
     } // appendTextArea
+
+    //------------------------------------------------------------
+    // Accept payment amount
+    protected void updateAmount(String paymentAmount) {
+        requestedAmountField.setText(paymentAmount);
+    } // Accept payment amount
 }

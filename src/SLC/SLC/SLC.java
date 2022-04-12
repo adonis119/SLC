@@ -5,6 +5,7 @@ import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
 import java.awt.*;
+import java.util.Random;
 
 
 //======================================================================
@@ -77,13 +78,11 @@ public class SLC extends AppThread {
 					sLServerMbox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 					lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 					break;
-
 				// Barcode
 				case BR_BarcodeRead:
 					log.info("Received Barcode " + msg.getDetails());
 					touchDisplayMBox.send(msg);
 					break;
-
 				// SL Server
 				case SLS_GetDeliveryOrder:
 					log.info("SLC receive the barcode from touch display " + msg.getDetails());
@@ -96,51 +95,69 @@ public class SLC extends AppThread {
 				case SLS_ReplyOpenLocker:
 					log.info("SLC call locker open a empty locker with size: " + msg.getDetails());
 					String lockerId = "";
+					int index = 0;
 					switch (msg.getDetails()) {
 						case "1":
 							for (int i = 17; i <= 24; i++) {
-								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
+								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
 									lockerId = lockers[i - 1].lockerID;
+									index = i - 1;
 									break;
 								}
 							}
 							break;
 						case "2":
 							for (int i = 9; i <= 16; i++) {
-								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
+								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
 									lockerId = lockers[i - 1].lockerID;
+									index = i - 1;
 									break;
 								}
 							}
 							break;
 						case "3":
 							for (int i = 1; i <= 8; i++) {
-								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0) {
+								if (lockers[i - 1].emptyStatus == 0 && lockers[i - 1].doorStatus == 0 && lockers[i - 1].bookingStatus == 0) {
 									lockerId = lockers[i - 1].lockerID;
+									index = i - 1;
 									break;
 								}
 							}
 							break;
 					}
-					// After choose a locker to store that delivery, display a screen show which locker is open
-					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					lockerMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, lockerId));
-					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, lockerId));
-					break;
 
+					if (msg.getDetails().equals("3") && lockerId.isEmpty()) {
+					} else if (lockerId.isEmpty()) {
+						log.info("Locker size " + msg.getDetails() + " is full. Try next size.");
+						mbox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, String.valueOf(Integer.parseInt(msg.getDetails()) + 1)));
+					} else {
+						lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, lockerId));
+						lockers[index].doorStatus = 1;
+						// After choose a locker to store that delivery, display a screen show which locker is open
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, lockerId));
+					}
+
+
+
+					break;
 				// Octopus
 				case OR_OctopusCardRead:
 					log.info("Payment success! The octopus card number is " + msg.getDetails());
+					// move below line to request octopus payment
+					octopusReaderMBox.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, "$ 500.00")));
 					break;
 				case OR_PaymentFailed:
 					log.info("Payment Failed! Please make sure to have at least " + msg.getDetails());
 					break;
-
+				case OR_PaymentAmount:
+					log.info("Payment sent to Octopus Reader:" + msg.getDetails());
+					break;
 				// Locker
 				case Locker_op:
 					log.info("The Locker is opened. " + msg.getDetails());
@@ -148,6 +165,21 @@ public class SLC extends AppThread {
 					break;
 				case Locker_cl:
 					log.info("The Locker is closed.  " + msg.getDetails());
+					int lockerIndex = 0;
+					for (int i = 0; i < 24; i++) {
+						if (lockers[i].lockerID.equals(msg.getDetails())) {
+							lockerIndex = i;
+							break;
+						}
+					}
+					if (lockers[lockerIndex].emptyStatus == 0) {
+						lockers[lockerIndex].emptyStatus = 1;
+						Random rnd = new Random();
+						lockers[lockerIndex].passCode = String.valueOf(10000000 + rnd.nextInt(90000000));
+						log.info("The passCode of " + msg.getDetails() + " is " + lockers[lockerIndex].passCode);
+					} else {
+						lockers[lockerIndex].emptyStatus = 0;
+					}
 					//lockerMBox.send(msg);
 					break;
 				case Locker_st:
@@ -161,7 +193,6 @@ public class SLC extends AppThread {
 					log.info(msg.getDetails());
 					//lockerMBox.send(msg);
 					break;
-
 				case PollAck:
 					log.info("PollAck: " + msg.getDetails());
 					break;
@@ -220,15 +251,16 @@ public class SLC extends AppThread {
 				// Check footer button
 				if(clickedPositionY>=390&&clickedPositionY<=430){
 					// Clicked footer
-					if(clickedPositionX>=105&&clickedPositionX<=265){
+					if (clickedPositionX >= 105 && clickedPositionX <= 265) {
 						//Clicked Enter
 						//TO-DO check passcode from locker
 						log.info("Clicked on Enter");
-						passcodeInput ="";
-					}else if (clickedPositionX>=380&&clickedPositionX<=540){
+						verifyPassCode(passcodeInput);
+						passcodeInput = "";
+					} else if (clickedPositionX >= 380 && clickedPositionX <= 540) {
 						//Clicked Back to Menu
 						log.info("Clicked on Back");
-						passcodeInput ="";
+						passcodeInput = "";
 						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
 						currentScene = "MainMenu";
 					}
@@ -319,14 +351,26 @@ public class SLC extends AppThread {
 			default:
 				break;
 		}
-
-
 	} // processMouseClicked
+
+	private void verifyPassCode(String passcodeInput) {
+		for (locker t : lockers) {
+			if (t.passCode.equals(passcodeInput)) {
+				lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
+				t.doorStatus = 1;
+				return;
+			}
+		}
+		touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, ""));
+		log.info("The passcode is not correct");
+	}
 
 	private class locker {
 		int doorStatus = 0; //0: the door is closed. 1: the door is closed.
 		int emptyStatus = 0; //0: the locker is empty. 1: the locker is not empty.
+		int bookingStatus = 0; //0: the locker is not booked. 1: the locker is booked.
 		String lockerID; // 3 different size (1: small, 2: medium, 3: big)
+		String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
 
 		int size = 1;
 
