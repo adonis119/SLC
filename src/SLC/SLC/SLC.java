@@ -5,6 +5,7 @@ import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -20,6 +21,7 @@ public class SLC extends AppThread {
     private String currentScene = "BlankScreen";
     private String passcodeInput = "";
     private locker[] lockers = new locker[24];
+    private ArrayList<String> allPassCode = new ArrayList<String>();
     private String barcodeHealth = "ACK";
     private String touchDisplayHealth = "ACK";
     private String octopusReaderHealth = "ACK";
@@ -178,7 +180,18 @@ public class SLC extends AppThread {
                     if (lockers[lockerIndex].emptyStatus == 0) {
                         lockers[lockerIndex].emptyStatus = 1;
                         Random rnd = new Random();
-                        lockers[lockerIndex].passCode = String.valueOf(10000000 + rnd.nextInt(90000000));
+                        String tempPassCode = String.valueOf(10000000 + rnd.nextInt(90000000));
+
+                        if(!allPassCode.isEmpty()){
+                            for(int i =0;i<allPassCode.size();i++){
+                                if(allPassCode.get(i).equals(tempPassCode)){
+                                    tempPassCode = String.valueOf(10000000 + rnd.nextInt(90000000));
+                                    i = 0;
+                                }
+                            }
+                        }
+                        lockers[lockerIndex].passCode = tempPassCode;
+                        allPassCode.add(tempPassCode);
                         log.info("The passCode of " + msg.getDetails() + " is " + lockers[lockerIndex].passCode);
                     } else {
                         lockers[lockerIndex].emptyStatus = 0;
@@ -397,6 +410,7 @@ public class SLC extends AppThread {
     private void verifyPassCode(String passcodeInput) {
         for (locker t : lockers) {
             if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
+                allPassCode.remove(t.lockerID);
                 lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
                 // After choose a locker to store that delivery, display a screen show which locker is open
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
