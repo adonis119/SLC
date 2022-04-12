@@ -108,6 +108,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
             case "AdminPage":
                 reloadStage("TouchDisplayAdminPage.fxml");
                 break;
+            case "Payment":
+                reloadStage("TouchDisplayPayment.fxml");
+                break;
             default:
                 log.severe(id + ": update display with unknown display type -- " + msg.getDetails());
                 break;

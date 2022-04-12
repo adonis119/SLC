@@ -98,6 +98,9 @@ public class TouchDisplayEmulatorController {
                     case "Admin Page":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "AdminPage"));
                         break;
+                    case "Payment":
+                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "Payment"));
+                        break;
                     case "Open Locker Door":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
                         break;

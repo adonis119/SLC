@@ -408,6 +408,14 @@ public class SLC extends AppThread {
             case "OpenLockerDoor":
                 log.info("Open Locker Door clicked");
                 break;
+            case "Payment":
+                if (clickedPositionY >= 390 && clickedPositionY <= 430&&clickedPositionX >= 380 && clickedPositionX <= 540) {
+                        //Clicked Back to Menu
+                        log.info("Clicked on Back");
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
+                        currentScene = "BlankScreen";
+                }
+                break;
             default:
                 break;
         }
