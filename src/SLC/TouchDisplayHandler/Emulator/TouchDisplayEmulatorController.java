@@ -92,8 +92,15 @@ public class TouchDisplayEmulatorController {
                     case "Store Delivery":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
                         break;
+                    case "Maintenance":
+                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
+                        break;
+                    case "Admin Page":
+                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "AdminPage"));
+                        break;
                     case "Open Locker Door":
                         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+                        break;
                 }
             }
         });

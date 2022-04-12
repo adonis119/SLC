@@ -19,28 +19,26 @@
 <!--            <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10" fill="lightgray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="100.0" />-->
 <!--            <Text fx:id="touchDisplayLockerTimerText" text="44 S" AnchorPane.topAnchor="15" AnchorPane.rightAnchor="30" style="-fx-font: 28 arial"/>-->
             <children>
-                <Rectangle fx:id="touchDisplayLocker1" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker3" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="0" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker5" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="161" AnchorPane.leftAnchor="0" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker7" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="212" AnchorPane.leftAnchor="0" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker9" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="263" AnchorPane.leftAnchor="0" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker11" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="329" AnchorPane.leftAnchor="0" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker2" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="105" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker4" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="105" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker6" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="161" AnchorPane.leftAnchor="105" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker8" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="212" AnchorPane.leftAnchor="105" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker10" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="263" AnchorPane.leftAnchor="105" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
-                <Rectangle fx:id="touchDisplayLocker12" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="329" AnchorPane.leftAnchor="105" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker1" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker3" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="0" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker5" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="161" AnchorPane.leftAnchor="0" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker7" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="212" AnchorPane.leftAnchor="0" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker9" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="263" AnchorPane.leftAnchor="0" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker11" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="329" AnchorPane.leftAnchor="0" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker2" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="105" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker4" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="105" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker6" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="161" AnchorPane.leftAnchor="105" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker8" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="212" AnchorPane.leftAnchor="105" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker10" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="263" AnchorPane.leftAnchor="105" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
+                <Rectangle fx:id="touchDisplayAdminLocker12" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="329" AnchorPane.leftAnchor="105" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
 
-                <Rectangle fx:id="touchDisplayLockerLeft" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="320" fill="lightgray" height="100" stroke="BLACK" strokeType="OUTSIDE" width="57" />
-                <Text fx:id="touchDisplayLockerLeftText" text="L11" AnchorPane.topAnchor="140" AnchorPane.leftAnchor="330" fill="WHITE" style="-fx-font: 20 arial"/>
-                <Rectangle fx:id="touchDisplayLockerRight" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="390" fill="lightgray" height="100" stroke="BLACK" strokeType="OUTSIDE" width="57" />
-                <Text fx:id="touchDisplayLockerRightText" text="R11" AnchorPane.topAnchor="140" AnchorPane.leftAnchor="400" fill="WHITE" style="-fx-font: 20 arial"/>
-
-                <Text text="Door is Opened!" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="320" style="-fx-font: 20 arial"/>
-                <Text fx:id="touchDisplayLockerContent" text="Please pick up your delivery at" AnchorPane.topAnchor="310" AnchorPane.leftAnchor="320" style="-fx-font: 20 arial"/>
-                <Text fx:id="touchDisplayLockerDetailText" text="Locker 1 at right hand side," AnchorPane.topAnchor="340" AnchorPane.leftAnchor="320" fill="red" style="-fx-font: 20 arial"/>
-                <Text text="then close the door" AnchorPane.topAnchor="370" AnchorPane.leftAnchor="320" style="-fx-font: 20 arial"/>
+                <Rectangle fx:id="touchDisplayAdminLockerLeft" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="320" fill="lightgray" height="100" stroke="BLACK" strokeType="OUTSIDE" width="57" />
+                <Text fx:id="touchDisplayAdminLockerLeftText" text="Left" AnchorPane.topAnchor="140" AnchorPane.leftAnchor="330" fill="BLACK" style="-fx-font: 20 arial"/>
+                <Rectangle fx:id="touchDisplayAdminLockerRight" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="100" AnchorPane.leftAnchor="390" fill="lightgray" height="100" stroke="BLACK" strokeType="OUTSIDE" width="57" />
+                <Text fx:id="touchDisplayAdminLockerRightText" text="Right" AnchorPane.topAnchor="140" AnchorPane.leftAnchor="400" fill="BLACK" style="-fx-font: 20 arial"/>
+                <Text text="Current Locker side:" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="250" style="-fx-font: 20 arial"/>
+                <Text fx:id="touchDisplayAdminLockerSide" text="Left" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="450" fill="RED" style="-fx-font: 20 arial"/>
+                <Text text="*Click Left/Right to switch the selected locker side" AnchorPane.topAnchor="210" AnchorPane.leftAnchor="300" fill="RED" style="-fx-font: 15 arial"/>
             </children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
         </AnchorPane>
@@ -77,6 +75,7 @@
                             <String fx:value="Store Delivery" />
                             <String fx:value="Open Locker Door" />
                             <String fx:value="Admin Page" />
+                            <String fx:value="Maintenance" />
                         </FXCollections>
                     </items>
                 </ChoiceBox>
