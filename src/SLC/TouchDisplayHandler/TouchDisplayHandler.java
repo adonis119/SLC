@@ -55,6 +55,9 @@ public class TouchDisplayHandler extends HWHandler {
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Pick");
                 break;
+            case TD_UpdateAdminPage:
+                log.info("Handler update admin status");
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
