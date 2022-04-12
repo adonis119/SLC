@@ -44,6 +44,9 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
 	myStage.initStyle(StageStyle.DECORATED);
 	myStage.setScene(new Scene(root, 350, 470));
 	myStage.setTitle("Barcode Reader");
+    // Set Pop up position of scene
+    myStage.setX(1100);
+    myStage.setY(300);
 	myStage.setResizable(false);
 	myStage.setOnCloseRequest((WindowEvent event) -> {
 	    slcStarter.stopApp();
