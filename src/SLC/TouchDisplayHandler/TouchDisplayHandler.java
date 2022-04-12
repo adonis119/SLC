@@ -93,4 +93,7 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick){
         log.info(id + ": update opened locker door title type:  " + storeOrPick);
     }
+    protected void handleShowPaymentError(Msg msg){
+        log.info(id + ": update payment error and show  " + msg.getDetails());
+    }
 } // TouchDisplayHandler

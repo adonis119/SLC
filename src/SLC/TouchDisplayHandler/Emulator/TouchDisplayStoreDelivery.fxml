@@ -56,6 +56,9 @@
                             <String fx:value="Confirmation" />
                             <String fx:value="Store Delivery" />
                             <String fx:value="Open Locker Door" />
+                            <String fx:value="Admin Page" />
+                            <String fx:value="Maintenance" />
+                            <String fx:value="Payment" />
                         </FXCollections>
                     </items>
                 </ChoiceBox>
