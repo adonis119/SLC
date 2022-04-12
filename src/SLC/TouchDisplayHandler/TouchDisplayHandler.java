@@ -40,6 +40,11 @@ public class TouchDisplayHandler extends HWHandler {
                 log.info("Handler receive replay from SLC " + msg.getDetails());
                 handleUpdateServerReply(msg);
                 break;
+
+            case passCode_wrong:
+                log.info(msg.getDetails());
+                handleWrongPasscode(msg);
+            break;
             case SLS_ReplyOpenLocker:
                 log.info("Handler show which locker has opened :"+msg.getDetails());
                 handleUpdateOpenLockerDoorDisplay(msg);
@@ -71,6 +76,10 @@ public class TouchDisplayHandler extends HWHandler {
     }// Handle update barcode input when SLC send Barcode to TD
     protected void handleUpdateServerReply(Msg msg){
         log.info(id + ": Server reply:  " + msg.getDetails());
+    }
+
+    protected void handleWrongPasscode(Msg msg) {
+        log.info(id + ": passcode is wrong and show on the display. Display: " + msg.getDetails());
     }
     protected void handleUpdateOpenLockerDoorDisplay(Msg msg){
         log.info(id + ": update opened locker door:  " + msg.getDetails());

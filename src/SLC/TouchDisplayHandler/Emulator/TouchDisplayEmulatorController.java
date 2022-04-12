@@ -32,6 +32,7 @@ public class TouchDisplayEmulatorController {
     public Text passcodeInputBox;
     public Text barcodeInputBox;
     public Text replyInputBox;
+    public Text wrongPasscodeResponse;
     public Rectangle touchDisplayLocker1;
     public Rectangle touchDisplayLocker2;
     public Rectangle touchDisplayLocker3;
@@ -236,4 +237,9 @@ public class TouchDisplayEmulatorController {
 
 
     }
+
+    public void td_wrongPasscode(String wrongPasscodeMsg){
+        this.wrongPasscodeResponse.setText(wrongPasscodeMsg);
+    }
+
 } // TouchDisplayEmulatorController

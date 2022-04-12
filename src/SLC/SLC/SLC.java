@@ -317,6 +317,9 @@ public class SLC extends AppThread {
                         currentScene = "MainMenu";
                     }
                 }
+                else{
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
+                }
                 // Check clicked number input
                 // Check the clicked of del first, since only del can click when passcode already have 8 digits
                 if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 382 && clickedPositionX <= 442) {
@@ -399,17 +402,18 @@ public class SLC extends AppThread {
         }
     } // processMouseClicked
 
-    private void verifyPassCode(String passcodeInput) {
-        for (locker t : lockers) {
-            if (t.passCode.equals(passcodeInput)) {
-                lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
-                t.doorStatus = 1;
-                return;
-            }
-        }
-        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, ""));
-        log.info("The passcode is not correct");
-    }
+
+
+	private void verifyPassCode(String passcodeInput) {
+		for (locker t : lockers) {
+			if (t.passCode.equals(passcodeInput)) {
+				lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
+				t.doorStatus = 1;
+				return;
+			}
+		}
+		touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,"The passcode is not correct"));
+	}
 
     private class locker {
         int doorStatus = 0; //0: the door is closed. 1: the door is closed.
@@ -417,9 +421,7 @@ public class SLC extends AppThread {
         int bookingStatus = 0; //0: the locker is not booked. 1: the locker is booked.
         String lockerID; // 3 different size (1: small, 2: medium, 3: big)
         String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
-
         int size = 1;
-
         locker(String lockerID, int size) {
             this.lockerID = lockerID;
             this.size = size;

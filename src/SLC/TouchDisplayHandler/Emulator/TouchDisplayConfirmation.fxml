@@ -19,6 +19,7 @@
                 <Text text="Enter 8 digits passcode to pick up" AnchorPane.topAnchor="40" AnchorPane.leftAnchor="105" style="-fx-font: 28 arial"/>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="80" AnchorPane.leftAnchor="105" fill="lightgray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="435.0" />
                 <Text fx:id="passcodeInputBox" text="" AnchorPane.topAnchor="85" AnchorPane.leftAnchor="125" style="-fx-font: 28 arial" fill="black"/>
+                <Text fx:id="wrongPasscodeResponse" text="" fill="RED" AnchorPane.topAnchor="125" AnchorPane.leftAnchor="105" style="-fx-font: 16 arial"/>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="150" AnchorPane.leftAnchor="202" fill="gray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" />
                 <Text text="1" AnchorPane.topAnchor="155" AnchorPane.leftAnchor="224" style="-fx-font: 28 arial" fill="white"/>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="150" AnchorPane.leftAnchor="292" fill="gray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="60.0" />
