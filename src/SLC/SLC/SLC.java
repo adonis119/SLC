@@ -28,6 +28,7 @@ public class SLC extends AppThread {
     private String lockerHealth = "ACK";
     private String sLServerHealth = "ACK";
     private String currentBarCode = "";
+    private locker currentLocker;
 
     //------------------------------------------------------------
     // SLC
@@ -164,6 +165,7 @@ public class SLC extends AppThread {
                 // Octopus
                 case OR_OctopusCardRead:
                     log.info("Payment success! The octopus card number is " + msg.getDetails());
+                    completePayment();
                     break;
                 case OR_PaymentFailed:
                     log.info("Payment Failed! Please make sure to have at least " + msg.getDetails());
@@ -434,22 +436,28 @@ public class SLC extends AppThread {
         for (locker t : lockers) {
             if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
                 allPassCode.remove(t.lockerID);
-                lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
+                this.currentLocker = t;
                 sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, t.lockerID));
-                // After choose a locker to store that delivery, display a screen show which locker is open
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_PassCodeOpenLocker, t.lockerID));
-                t.doorStatus = 1;
+                log.info("Waiting for payment");
                 return;
             }
         }
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, "The passcode is not correct"));
         log.info("The passcode is not correct");
+    }
+
+    private void completePayment() {
+        sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, currentLocker.lockerID));
+        lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, currentLocker.lockerID));
+        // After choose a locker to store that delivery, display a screen show which locker is open
+        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_PassCodeOpenLocker, currentLocker.lockerID));
+        currentLocker.doorStatus = 1;
     }
 
     private class locker {
@@ -458,6 +466,7 @@ public class SLC extends AppThread {
         String lockerID; // 3 different size (1: small, 2: medium, 3: big)
         String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
         int size = 1;
+
         locker(String lockerID, int size) {
             this.lockerID = lockerID;
             this.size = size;
