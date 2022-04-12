@@ -156,4 +156,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick){
         touchDisplayEmulatorController.td_updateOpenLockerDoorTitleDetail(storeOrPick);
     }
+    protected void handleShowPaymentError(Msg msg){
+        touchDisplayEmulatorController.td_showPaymentError(msg.getDetails());
+    }
 } // TouchDisplayEmulator

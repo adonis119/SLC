@@ -52,6 +52,8 @@ public class TouchDisplayEmulatorController {
     public Text touchDisplayLockerDetailText;
     public  Text touchDisplayLockerContent;
     public Text touchDisplayLockerTitle;
+    public  Text touchDisplayPaymentError;
+    public  Text touchDisplayPaymentError2;
     private String[] rightLockerIDList = {"lockerID5", "lockerID6", "lockerID13", "lockerID14", "lockerID21", "lockerID22", "lockerID23", "lockerID24",
             "lockerID15", "lockerID16", "lockerID7", "lockerID8"};
     private String[] leftLockerIDList = {"lockerID1", "lockerID2", "lockerID9", "lockerID10", "lockerID17", "lockerID18", "lockerID19", "lockerID20",
@@ -261,6 +263,13 @@ public class TouchDisplayEmulatorController {
         }else if (storeOrPick.compareTo("Pick")==0){
             this.touchDisplayLockerContent.setText("Please pick up your delivery at");
             this.touchDisplayLockerTitle.setText("Pick up delivery");
+        }
+    }
+
+    public void td_showPaymentError(String errorType){
+        if(errorType.equals("AmountNotEnough")) {
+            this.touchDisplayPaymentError.setOpacity(100);
+            this.touchDisplayPaymentError2.setOpacity(100);
         }
     }
 
