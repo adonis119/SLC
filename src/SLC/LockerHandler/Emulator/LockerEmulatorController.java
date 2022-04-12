@@ -98,16 +98,18 @@ public class LockerEmulatorController {
 
     } // initialize
 
+
     //------------------------------------------------------------
     // buttonPressed
-    public void buttonPressed(ActionEvent actionEvent) throws IOException {
+    public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_st, btn.getId()));
+        //lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_st, btn.getId()));
         if(!btn.getText().equals("Closed")){
             btn.setText("Closed");
             lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_cl, btn.getId()));
         }
     } // buttonPressed
+
 
     public void lockerStatus(String lockerId){
         String status = "";
@@ -197,82 +199,105 @@ public class LockerEmulatorController {
     public void openLocker(String lockerId){
         switch(lockerId){
             case "lockerID1":
+                lockerID1.setStyle("-fx-background-color:");
                 lockerID1.setText("Opened");
                 break;
             case "lockerID2":
+                lockerID2.setStyle("-fx-background-color:");
                 lockerID2.setText("Opened");
                 break;
             case "lockerID3":
+                lockerID3.setStyle("-fx-background-color:");
                 lockerID3.setText("Opened");
                 break;
             case "lockerID4":
+                lockerID4.setStyle("-fx-background-color:");
                 lockerID4.setText("Opened");
                 break;
             case "lockerID5":
+                lockerID5.setStyle("-fx-background-color:");
                 lockerID5.setText("Opened");
                 break;
             case "lockerID6":
+                lockerID6.setStyle("-fx-background-color:");
                 lockerID6.setText("Opened");
                 break;
             case "lockerID7":
+                lockerID7.setStyle("-fx-background-color:");
                 lockerID7.setText("Opened");
                 break;
             case "lockerID8":
+                lockerID8.setStyle("-fx-background-color:");
                 lockerID8.setText("Opened");
                 break;
             case "lockerID9":
+                lockerID9.setStyle("-fx-background-color:");
                 lockerID9.setText("Opened");
                 break;
             case "lockerID10":
+                lockerID10.setStyle("-fx-background-color:");
                 lockerID10.setText("Opened");
                 break;
             case "lockerID11":
+                lockerID11.setStyle("-fx-background-color:");
                 lockerID11.setText("Opened");
                 break;
             case "lockerID12":
+                lockerID12.setStyle("-fx-background-color:");
                 lockerID12.setText("Opened");
                 break;
             case "lockerID13":
+                lockerID13.setStyle("-fx-background-color:");
                 lockerID13.setText("Opened");
                 break;
             case "lockerID14":
+                lockerID14.setStyle("-fx-background-color:");
                 lockerID14.setText("Opened");
                 break;
             case "lockerID15":
+                lockerID15.setStyle("-fx-background-color:");
                 lockerID15.setText("Opened");
                 break;
             case "lockerID16":
+                lockerID16.setStyle("-fx-background-color:");
                 lockerID16.setText("Opened");
                 break;
             case "lockerID17":
+                lockerID17.setStyle("-fx-background-color:");
                 lockerID17.setText("Opened");
                 break;
             case "lockerID18":
+                lockerID18.setStyle("-fx-background-color:");
                 lockerID18.setText("Opened");
                 break;
             case "lockerID19":
+                lockerID19.setStyle("-fx-background-color:");
                 lockerID19.setText("Opened");
                 break;
             case "lockerID20":
+                lockerID20.setStyle("-fx-background-color:");
                 lockerID20.setText("Opened");
                 break;
             case "lockerID21":
+                lockerID21.setStyle("-fx-background-color:");
                 lockerID21.setText("Opened");
                 break;
             case "lockerID22":
+                lockerID22.setStyle("-fx-background-color:");
                 lockerID22.setText("Opened");
                 break;
             case "lockerID23":
+                lockerID23.setStyle("-fx-background-color:");
                 lockerID23.setText("Opened");
                 break;
             case "lockerID24":
+                lockerID24.setStyle("-fx-background-color:");
                 lockerID24.setText("Opened");
                 break;
         }
         lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_op, lockerId));
 
     }
-
 
     //------------------------------------------------------------
     // getters
