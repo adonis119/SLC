@@ -131,12 +131,11 @@ public class OctopusReaderEmulatorController {
         requestedAmount = Double.parseDouble(parseRequest);
         octopusAmount = Double.parseDouble(parseOctopus);
 
-        if (octopusAmount - requestedAmount < -50.0) {
-            return false; // if not enough money
-        }
+        if (octopusAmount <= 0.0) return false; // if not enough money
+        if (octopusAmount - requestedAmount < -50.0) return false; // if not enough money
+
         // if enough money
         octopusAmountField.setText("$ " + String.format("%.2f", (octopusAmount - requestedAmount)));
-
         return true;
     } // Payment handling
 
