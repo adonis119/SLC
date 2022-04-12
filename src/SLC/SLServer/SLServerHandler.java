@@ -47,6 +47,9 @@ public class SLServerHandler extends HWHandler {
                 break;
             case SLS_RequestAmount:
                 log.info("SLServer receive LockerID from SLC " + msg.getDetails());
+                fetchAmount(msg);
+                break;
+            case SLS_ReplyAmount:
                 slc.send((new Msg(id, mbox, Msg.Type.SLS_ReplyAmount, msg.getDetails())));
                 break;
             default:
