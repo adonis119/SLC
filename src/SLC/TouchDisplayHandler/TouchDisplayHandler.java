@@ -48,6 +48,7 @@ public class TouchDisplayHandler extends HWHandler {
             case SLS_ReplyOpenLocker:
                 log.info("Handler show which locker has opened :"+msg.getDetails());
                 handleUpdateOpenLockerDoorDisplay(msg);
+                handleUpdateOpenLockerDoorTitleDetail("Store");
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -83,5 +84,8 @@ public class TouchDisplayHandler extends HWHandler {
     }
     protected void handleUpdateOpenLockerDoorDisplay(Msg msg){
         log.info(id + ": update opened locker door:  " + msg.getDetails());
+    }
+    protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick){
+        log.info(id + ": update opened locker door title type:  " + storeOrPick);
     }
 } // TouchDisplayHandler
