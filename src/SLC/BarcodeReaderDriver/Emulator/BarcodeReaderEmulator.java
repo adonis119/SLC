@@ -80,16 +80,13 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
     // handlePoll
     protected void handlePoll() {
         // super.handlePoll();
-
         switch (barcodeReaderEmulatorController.getPollResp()) {
             case "ACK":
                 slc.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                 break;
-
             case "NAK":
                 slc.send(new Msg(id, mbox, Msg.Type.PollNak, id + " is down!"));
                 break;
-
             case "Ignore":
                 // Just ignore.  do nothing!!
                 break;

@@ -28,6 +28,7 @@ public class TouchDisplayEmulatorController {
     public Text passcodeInputBox;
     public Text barcodeInputBox;
     public Text replyInputBox;
+    public Text wrongPasscodeResponse;
     //------------------------------------------------------------
     // initialize
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, TouchDisplayEmulator touchDisplayEmulator, String pollRespParam) {
@@ -111,4 +112,9 @@ public class TouchDisplayEmulatorController {
     public void td_updateServerReply(String reply){
         this.replyInputBox.setText(reply);
     }
+
+    public void td_wrongPasscode(String wrongPasscodeMsg){
+        this.wrongPasscodeResponse.setText(wrongPasscodeMsg);
+    }
+
 } // TouchDisplayEmulatorController

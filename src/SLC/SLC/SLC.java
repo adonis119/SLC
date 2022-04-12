@@ -251,6 +251,7 @@ public class SLC extends AppThread {
 						currentScene = "MainMenu";
 					}
 				}
+				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
 				// Check clicked number input
 				// Check the clicked of del first, since only del can click when passcode already have 8 digits
 				if(clickedPositionY>=315&&clickedPositionY<=355&&clickedPositionX>=382&&clickedPositionX<=442)
@@ -339,8 +340,7 @@ public class SLC extends AppThread {
 				return;
 			}
 		}
-		touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, ""));
-		log.info("The passcode is not correct");
+		touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,"The passcode is not correct"));
 	}
 
 	private class locker {

@@ -136,4 +136,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     protected void handleUpdateServerReply(Msg msg){
         touchDisplayEmulatorController.td_updateServerReply(msg.getDetails());
     }//
+    protected void handleWrongPasscode(Msg msg){
+        touchDisplayEmulatorController.td_wrongPasscode(msg.getDetails());
+    }
 } // TouchDisplayEmulator
