@@ -99,6 +99,7 @@ public class Msg {
         /** Octopus Reader Go Activate */	OR_GoActive,
         /** Octopus Reader Go Standby */	OR_GoStandby,
         /** Octopus Card inserted */		OR_OctopusCardRead,
+        /** Octopus Payment Failed */ OR_PaymentFailed,
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
         /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrder,
     } // Type

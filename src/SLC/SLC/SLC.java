@@ -36,52 +36,62 @@ public class SLC extends AppThread {
 	sLServerMbox = appKickstarter.getThread("SLServer").getMBox();
 
 	for (boolean quit = false; !quit;) {
-	    Msg msg = mbox.receive();
+		Msg msg = mbox.receive();
 
-	    log.fine(id + ": message received: [" + msg + "].");
+		log.fine(id + ": message received: [" + msg + "].");
 
-	    switch (msg.getType()) {
-		case TD_MouseClicked:
-		    log.info("MouseCLicked: " + msg.getDetails());
-		    processMouseClicked(msg);
-		    break;
-		case TD_UpdateDisplay:
-			// Update currentScene first (For the right bottom selection hacking scene or normal update display)
-			log.info("DisplayUpdated: " + msg.getDetails());
-			this.currentScene = msg.getDetails();
-			break;
-		case TimesUp:
-		    Timer.setTimer(id, mbox, pollingTime);
-		    log.info("Poll: " + msg.getDetails());
-		    barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
-		    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
-			octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
-			sLServerMbox.send(new Msg(id,mbox,Msg.Type.Poll,""));
-		    break;
-		case BR_BarcodeRead:
-			log.info("Received Barcode " + msg.getDetails());
-			//send message to touchDisplay
-			touchDisplayMBox.send(msg);
-			break;
-		case SLS_GetDeliveryOrder:
-			log.info("SLC receive the barcode from touch display " + msg.getDetails());
-			sLServerMbox.send(msg);
-			break;
+		switch (msg.getType()) {
+			// Touch Display
+			case TD_MouseClicked:
+				log.info("MouseCLicked: " + msg.getDetails());
+				processMouseClicked(msg);
+				break;
+			case TD_UpdateDisplay:
+				// Update currentScene first (For the right bottom selection hacking scene or normal update display)
+				log.info("DisplayUpdated: " + msg.getDetails());
+				this.currentScene = msg.getDetails();
+				break;
+			case TimesUp:
+				Timer.setTimer(id, mbox, pollingTime);
+				log.info("Poll: " + msg.getDetails());
+				barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+				octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+				sLServerMbox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+				break;
+			// Barcode
+			case BR_BarcodeRead:
+				log.info("Received Barcode " + msg.getDetails());
+				//send message to touchDisplay
+				touchDisplayMBox.send(msg);
+				break;
+			case SLS_GetDeliveryOrder: // SL Server
+				log.info("SLC receive the barcode from touch display " + msg.getDetails());
+				sLServerMbox.send(msg);
+				break;
 			case SLS_ReplyDeliveryOrder:
 				log.info("SLC receive the reply from server " + msg.getDetails());
 				touchDisplayMBox.send(msg);
 				break;
+			// Octopus
+			case OR_OctopusCardRead:
+				log.info("Payment success! The octopus card number is " + msg.getDetails());
+				break;
+			case OR_PaymentFailed:
+				log.info("Payment Failed! Please make sure to have at least " + msg.getDetails());
+				break;
+
 			case PollAck:
-		    log.info("PollAck: " + msg.getDetails());
-		    break;
+				log.info("PollAck: " + msg.getDetails());
+				break;
 
-		case Terminate:
-		    quit = true;
-		    break;
+			case Terminate:
+				quit = true;
+				break;
 
-		default:
-		    log.warning(id + ": unknown message type: [" + msg + "]");
-	    }
+			default:
+				log.warning(id + ": unknown message type: [" + msg + "]");
+		}
 	}
 
 	// declaring our departure

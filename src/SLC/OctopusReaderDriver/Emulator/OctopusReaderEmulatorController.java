@@ -106,6 +106,8 @@ public class OctopusReaderEmulatorController {
                     octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText() + "\n");
                 } else {
                     // if payment fail
+                    octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_PaymentFailed, requestedAmountField.getText()));
+                    octopusReaderTextArea.appendText("Payment failed. Not enough money to pay." + "\n");
                 }
                 break;
 
