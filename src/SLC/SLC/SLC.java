@@ -317,7 +317,9 @@ public class SLC extends AppThread {
                         currentScene = "MainMenu";
                     }
                 }
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
+                else{
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
+                }
                 // Check clicked number input
                 // Check the clicked of del first, since only del can click when passcode already have 8 digits
                 if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 382 && clickedPositionX <= 442) {
