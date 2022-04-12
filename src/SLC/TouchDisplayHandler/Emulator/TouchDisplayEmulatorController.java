@@ -273,4 +273,8 @@ public class TouchDisplayEmulatorController {
         }
     }
 
+    public void td_updateAdminPageAllLockerStatus(){
+
+    }
+
 } // TouchDisplayEmulatorController

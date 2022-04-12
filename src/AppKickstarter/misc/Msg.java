@@ -111,6 +111,7 @@ public class Msg {
         /** Locker status is closed */		Locker_st_c,
         /** Locker status is opened*/		Locker_st_o,
         /** PassCode is not correct, show to user */ passCode_wrong,
-        /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker
+        /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker,
+        /** Update the admin lockers status*/ TD_UpdateAdminPage,
     } // Type
 } // Msg

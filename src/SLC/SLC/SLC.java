@@ -75,6 +75,9 @@ public class SLC extends AppThread {
                     // Update currentScene first (For the right bottom selection hacking scene or normal update display)
                     log.info("DisplayUpdated: " + msg.getDetails());
                     this.currentScene = msg.getDetails();
+                    if(msg.getDetails().equals("AdminPage")){
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateAdminPage, lockers.toString()));
+                    }
                     break;
                 case TimesUp:
                     Timer.setTimer(id, mbox, pollingTime);
