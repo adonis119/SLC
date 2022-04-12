@@ -27,7 +27,7 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
         super(id, slcStarter);
         this.slcStarter = slcStarter;
         this.id = id;
-    }
+    } // OctopusReaderEmulator
 
 
     //------------------------------------------------------------
@@ -53,7 +53,7 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
             Platform.exit();
         });
         myStage.show();
-    }
+    } // start
 
 
     //------------------------------------------------------------
