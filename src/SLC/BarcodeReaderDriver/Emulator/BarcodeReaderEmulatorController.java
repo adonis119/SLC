@@ -97,6 +97,7 @@ public class BarcodeReaderEmulatorController {
                     barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
                     barcodeReaderTextArea.appendText("Sending barcode " + barcodeNumField.getText() + "\n");
                 }
+
                 else if(barcodeReaderStatusField.getText().equals("Standby")){
                     barcodeReaderTextArea.appendText("Error: Currently no store request!"+ "\n");
                 }
