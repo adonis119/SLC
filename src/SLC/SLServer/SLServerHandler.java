@@ -28,9 +28,9 @@ public class SLServerHandler extends HWHandler {
                 else{
                     slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrder, "This barcode is available!"));
                     if(msg.getDetails().equals(appKickstarter.getProperty("BarcodeReader.Barcode1")))
-                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder1Size")));
+                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder1.size")));
                     else if(msg.getDetails().equals(appKickstarter.getProperty("BarcodeReader.Barcode3")))
-                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder3Size")));
+                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder3.size")));
                     else
                         slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,"2"));
 
