@@ -42,7 +42,7 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
         octopusReaderEmulatorController = (OctopusReaderEmulatorController) loader.getController();
         octopusReaderEmulatorController.initialize(id, slcStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
-        myStage.setScene(new Scene(root, 350, 470));
+        myStage.setScene(new Scene(root, 350, 600));
         myStage.setTitle("Octopus Reader");
         // Set Pop up position of scene
         myStage.setX(1100);
