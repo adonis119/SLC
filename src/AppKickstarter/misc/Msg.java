@@ -110,6 +110,7 @@ public class Msg {
         /** Locker check status */		Locker_st,
         /** Locker status is closed */		Locker_st_c,
         /** Locker status is opened*/		Locker_st_o,
-        /** PassCode is not correct, show to user */ passCode_wrong
+        /** PassCode is not correct, show to user */ passCode_wrong,
+        /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker
     } // Type
 } // Msg

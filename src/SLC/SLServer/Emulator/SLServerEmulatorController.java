@@ -53,7 +53,6 @@ public class SLServerEmulatorController {
         this.pollResp = pollRespCBox.getValue().toString();
     } // initialize
 
-
     //------------------------------------------------------------
     // buttonPressed
     public void buttonPressed(ActionEvent actionEvent) {
@@ -64,32 +63,30 @@ public class SLServerEmulatorController {
                 sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1.size"));
                 sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1.amount"));
                 break;
-
             case "Delivery Order 2":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2"));
                 sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2.size"));
                 sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2.amount"));
                 break;
-
             case "Delivery Order 3":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3"));
                 sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3.size"));
                 sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3.amount"));
                 break;
-
             case "Reset":
                 sLServerDeliveryOrderIDField.setText("");
                 sLServerDeliverySizeField.setText("");
                 sLServerDeliveryAmount.setText("");
                 break;
 
+
             case "Create Delivery Order to SL Server":
-                if(sLServerDeliveryOrderIDField.getText().equals("")||sLServerDeliverySizeField.getText().equals("")||sLServerDeliveryAmount.getText().equals("")){
+                if (sLServerDeliveryOrderIDField.getText().equals("") || sLServerDeliverySizeField.getText().equals("") || sLServerDeliveryAmount.getText().equals("")) {
                     sLServerTextArea.appendText("Please fill in all the input box! \n");
                     return;
                 }
 
-                if(deliveryOrderArrayList.isEmpty()) {
+                if (deliveryOrderArrayList.isEmpty()) {
                     deliveryOrderArrayList.add(new deliveryOrder(sLServerDeliveryOrderIDField.getText(), Integer.parseInt(sLServerDeliverySizeField.getText()),
                             Integer.parseInt(sLServerDeliveryAmount.getText())));
                     sLServerTextArea.appendText("Created Delivery order :\n");
@@ -111,6 +108,11 @@ public class SLServerEmulatorController {
                     sLServerTextArea.appendText("Delivery Amount :" + sLServerDeliveryAmount.getText() + "\n");
 
                 }
+                break;
+            case "Send Delivery Order to SLC":
+                sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_GetDeliveryOrder, sLServerDeliveryOrderIDField.getText()));
+                sLServerTextArea.appendText("Sending Delivery order NO. :" + sLServerDeliveryOrderIDField.getText() + "\n");
+
                 break;
             default:
                 log.warning(id + ": unknown button: [" + btn.getText() + "]");

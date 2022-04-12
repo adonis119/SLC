@@ -153,7 +153,7 @@ public class TouchDisplayEmulatorController {
             rightOrLeftLocker = "R";
             this.touchDisplayLockerRight.setFill(Color.RED);
         } else if (Arrays.asList(leftLockerIDList).contains(lockerId)) {
-            log.info("This locker is Left!" + lockerId);
+            log.info("This locker is Left! " + lockerId);
             rightOrLeftLocker = "L";
             this.touchDisplayLockerLeft.setFill(Color.RED);
         } else {
