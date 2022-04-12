@@ -273,22 +273,28 @@ public class SLC extends AppThread {
         int clickedPositionY = Integer.parseInt(splitClickedPointed[1]);
         log.info("MouseX: " + splitClickedPointed[0]);
         log.info("MouseY: " + splitClickedPointed[1]);
-
+        if(touchDisplayHealth.equals("NAK"))
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
         switch (currentScene) {
             case "BlankScreen":
+                if(touchDisplayHealth.equals("NAK"))
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
+                else
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                break;
             case "Maintenance":
                 // If user click the blank/Maintenance scene, direct to MainMenu, and set currentScene to "MainMenu"
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
                 // currentScene = "MainMenu";
                 break;
             case "MainMenu":
                 log.info("Clicked on MainMenu");
                 // Click on Pick up x= 0~300(left=0,width=300), y= 270~340(bottom=140, height=70)
                 if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 270 && clickedPositionY <= 340) {
-                    if (octopusReaderHealth.equals("ACK")) {
+                    if (barcodeHealth.equals("ACK")&&lockerHealth.equals("ACK")) {
                         log.info("Clicked Pick up delivery");
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
-                    } else if (octopusReaderHealth.equals("NAK")) {
+                    } else if (barcodeHealth.equals("NAK")||lockerHealth.equals("NAK")) {
                         //octopusReaderMBox.send(new Msg(id, mbox, Msg.Type., ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                     }
@@ -296,10 +302,10 @@ public class SLC extends AppThread {
                     // Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
                     log.info("Clicked Store delivery");
                     // Activate Barcode reader for scan barcode
-                    if (barcodeHealth.equals("ACK")) {
+                    if (barcodeHealth.equals("ACK")&&lockerHealth.equals("ACK")) {
                         barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoActive, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
-                    } else if (barcodeHealth.equals("NAK")) {
+                    } else if (barcodeHealth.equals("NAK")||lockerHealth.equals("NAK")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                     }
                 } else if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 340 && clickedPositionY <= 410) {
