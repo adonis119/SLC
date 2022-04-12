@@ -92,6 +92,7 @@ public class BarcodeReaderEmulatorController {
 		break;
 
 	    case "Send Barcode":
+	            //send barcode to BarcodeReaderDriver
                 barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
                 barcodeReaderTextArea.appendText("Sending barcode " + barcodeNumField.getText()+"\n");
 		break;

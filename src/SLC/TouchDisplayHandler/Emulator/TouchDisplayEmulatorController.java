@@ -20,14 +20,14 @@ public class TouchDisplayEmulatorController {
     private Logger log;
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
+    private MBox slServerMbox;
     private String selectedScreen;
     private String pollResp;
     public ChoiceBox screenSwitcherCBox;
     public ChoiceBox pollRespCBox;
     public Text passcodeInputBox;
     public Text barcodeInputBox;
-
-
+    public Text replyInputBox;
     //------------------------------------------------------------
     // initialize
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, TouchDisplayEmulator touchDisplayEmulator, String pollRespParam) {
@@ -91,6 +91,7 @@ public class TouchDisplayEmulatorController {
 	int y = (int) mouseEvent.getY();
 
 	log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
+	//send back to driver
 	touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
 
@@ -102,6 +103,12 @@ public class TouchDisplayEmulatorController {
         // Prevent user send barcode before the store delivery loaded
             if(this.selectedScreen.compareTo("Store Delivery")==0) {
                 this.barcodeInputBox.setText(barcodeInput);
+                //Pass barcode data from Controller to Handler
+                touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.SLS_GetDeliveryOrder, barcodeInputBox.getText()));
             }
     } // update barcode input when slc send a msg to update it
+
+    public void td_updateServerReply(String reply){
+        this.replyInputBox.setText(reply);
+    }
 } // TouchDisplayEmulatorController

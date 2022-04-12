@@ -100,5 +100,6 @@ public class Msg {
         /** Octopus Reader Go Standby */	OR_GoStandby,
         /** Octopus Card inserted */		OR_OctopusCardRead,
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
+        /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrder,
     } // Type
 } // Msg

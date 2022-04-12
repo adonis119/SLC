@@ -60,9 +60,18 @@ public class SLC extends AppThread {
 		    break;
 		case BR_BarcodeRead:
 			log.info("Received Barcode " + msg.getDetails());
+			//send message to touchDisplay
 			touchDisplayMBox.send(msg);
 			break;
-		case PollAck:
+		case SLS_GetDeliveryOrder:
+			log.info("SLC receive the barcode from touch display " + msg.getDetails());
+			sLServerMbox.send(msg);
+			break;
+			case SLS_ReplyDeliveryOrder:
+				log.info("SLC receive the reply from server " + msg.getDetails());
+				touchDisplayMBox.send(msg);
+				break;
+			case PollAck:
 		    log.info("PollAck: " + msg.getDetails());
 		    break;
 

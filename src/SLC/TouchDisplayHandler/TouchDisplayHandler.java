@@ -33,6 +33,14 @@ public class TouchDisplayHandler extends HWHandler {
             case BR_BarcodeRead:
                 handleUpdateBarcodeInput(msg);
                 break;
+            case SLS_GetDeliveryOrder:
+                //Send barcode data from handler to SLC
+                slc.send(new Msg(id, mbox, Msg.Type.SLS_GetDeliveryOrder, msg.getDetails()));
+                break;
+            case SLS_ReplyDeliveryOrder:{
+                log.info("Handler receive replay from SLC " + msg.getDetails());
+                handleUpdateServerReply(msg);
+            }
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -59,4 +67,7 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handleUpdateBarcodeInput(Msg msg){
         log.info(id + ": update barcode input -- " + msg.getDetails());
     }// Handle update barcode input when SLC send Barcode to TD
+    protected void handleUpdateServerReply(Msg msg){
+        log.info(id + ": Server reply:  " + msg.getDetails());
+    }
 } // TouchDisplayHandler

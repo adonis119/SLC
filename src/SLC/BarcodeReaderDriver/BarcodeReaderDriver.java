@@ -16,10 +16,11 @@ public class BarcodeReaderDriver extends HWHandler {
 
 
     //------------------------------------------------------------
-    // processMsg
+    // processMsg -> send message
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case BR_BarcodeRead:
+                //receive from controller, send to slc
                 slc.send(new Msg(id, mbox, Msg.Type.BR_BarcodeRead, msg.getDetails()));
                 break;
 

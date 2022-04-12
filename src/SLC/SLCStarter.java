@@ -61,7 +61,7 @@ public class SLCStarter extends AppKickstarter {
 	    barcodeReaderDriver = new BarcodeReaderDriver("BarcodeReaderDriver", this);
 	    touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
 		octopusReaderDriver = new OctopusReaderDriver("OctopusReaderDriver", this);
-		sLServerHandler = new SLServerHandler("SLServer", this);
+		sLServerHandler = new SLServerHandler("sLServerHandler", this);
 	} catch (Exception e) {
 	    System.out.println("AppKickstarter: startApp failed");
 	    e.printStackTrace();

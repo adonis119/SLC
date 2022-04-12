@@ -132,5 +132,8 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     }// Handle update passcode input box value when user click the number on the display screen
     protected void handleUpdateBarcodeInput(Msg msg){
        touchDisplayEmulatorController.td_updateBarcodeInput(msg.getDetails());
-    }// Handle update barcode input when SLC send Barcode to TD
+    }//// Handle update barcode input when SLC send Barcode to TD
+    protected void handleUpdateServerReply(Msg msg){
+        touchDisplayEmulatorController.td_updateServerReply(msg.getDetails());
+    }//
 } // TouchDisplayEmulator

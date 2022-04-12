@@ -20,9 +20,15 @@ public class SLServerHandler extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case SLS_GetDeliveryOrder:
-                slc.send(new Msg(id, mbox, Msg.Type.SLS_GetDeliveryOrder, msg.getDetails()));
+                //Receive Data from
+                log.info("SLServer receive barcode from SLC " + msg.getDetails());
+                if(msg.getDetails().equals("2026-6202")){
+                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrder, "This barcode has been used!"));
+                }
+                else{
+                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrder, "This barcode is available!"));
+                }
                 break;
-
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
