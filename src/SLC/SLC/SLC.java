@@ -27,8 +27,7 @@ public class SLC extends AppThread {
     private String octopusReaderHealth = "ACK";
     private String lockerHealth = "ACK";
     private String sLServerHealth = "ACK";
-    private String currentBarCode;
-    private int lockerOpenDoorCount = 0;
+    private String currentBarCode = "";
 
     //------------------------------------------------------------
     // SLC
@@ -95,7 +94,7 @@ public class SLC extends AppThread {
                     log.info("SLC receive the barcode from touch display " + msg.getDetails());
                     sLServerMbox.send(msg);
                     break;
-                case SLS_ReplyDeliveryOrder:
+                case SLS_ReplyDeliveryOrderForGui:
                     log.info("SLC receive the reply from server " + msg.getDetails());
                     touchDisplayMBox.send(msg);
                     break;
@@ -140,6 +139,8 @@ public class SLC extends AppThread {
                     } else {
                         lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, lockerId));
                         lockers[index].doorStatus = 1;
+                        lockers[index].lockerID = currentBarCode;
+                        currentBarCode = "";
                         // After choose a locker to store that delivery, display a screen show which locker is open
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
                         try {
@@ -203,9 +204,8 @@ public class SLC extends AppThread {
                     //lockerMBox.send(msg);
                     break;
                 case Locker_st_c:
-                    log.info(msg.getDetails());
-                    break;
                 case Locker_st_o:
+                    log.info(msg.getDetails());
                     log.info(msg.getDetails());
                     //lockerMBox.send(msg);
                     break;

@@ -22,11 +22,13 @@ public class SLServerHandler extends HWHandler {
             case SLS_GetDeliveryOrder:
                 //Receive Data from
                 log.info("SLServer receive barcode from SLC " + msg.getDetails());
+                verifyBarCode(msg);
+                /*
                 if(msg.getDetails().equals("2026-6202")){
-                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrder, "This barcode has been used!"));
+                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrderForGui, "This barcode has been used!"));
                 }
                 else{
-                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrder, "This barcode is available!"));
+                    slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrderForGui, "This barcode is available!"));
                     if(msg.getDetails().equals(appKickstarter.getProperty("BarcodeReader.Barcode1")))
                         slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder1.size")));
                     else if(msg.getDetails().equals(appKickstarter.getProperty("BarcodeReader.Barcode3")))
@@ -35,6 +37,13 @@ public class SLServerHandler extends HWHandler {
                         slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,"2"));
 
                 }
+                 */
+                break;
+            case SLS_ReplyDeliveryOrderForGui:
+                slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrderForGui, msg.getDetails()));
+                break;
+            case SLS_ReplyOpenLocker:
+                slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, msg.getDetails()));
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -45,6 +54,9 @@ public class SLServerHandler extends HWHandler {
     // handlePoll
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
+    } // handlePoll
+    protected void verifyBarCode(Msg msg) {
+        log.info(id + ": verify BarCode : " + msg.getDetails());
     } // handlePoll
 }
 

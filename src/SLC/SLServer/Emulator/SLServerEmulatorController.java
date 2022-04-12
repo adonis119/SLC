@@ -139,6 +139,20 @@ public class SLServerEmulatorController {
         sLServerTextArea.appendText(status + "\n");
     } // appendTextArea
 
+    public void verifyOrder(String orderID){
+        String tempOrderID = orderID.split("-")[0]+orderID.split("-")[1] ;
+        if(!deliveryOrderArrayList.isEmpty()){
+            for(int i =0;i<deliveryOrderArrayList.size();i++){
+                if(deliveryOrderArrayList.get(i).orderId.equals(tempOrderID)){
+                    sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyDeliveryOrderForGui, "This barcode is available!"));
+                    sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyOpenLocker, String.valueOf(deliveryOrderArrayList.get(i).size)));
+                    return;
+                }
+            }
+        }
+        sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyDeliveryOrderForGui, "This barcode is not available!"));
+    }
+
     private class deliveryOrder {
         String orderId = "";
         int size = 1;

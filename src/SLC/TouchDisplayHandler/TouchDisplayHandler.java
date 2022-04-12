@@ -36,7 +36,7 @@ public class TouchDisplayHandler extends HWHandler {
                 //Send barcode data from handler to SLC
                 slc.send(new Msg(id, mbox, Msg.Type.SLS_GetDeliveryOrder, msg.getDetails()));
                 break;
-            case SLS_ReplyDeliveryOrder:
+            case SLS_ReplyDeliveryOrderForGui:
                 log.info("Handler receive replay from SLC " + msg.getDetails());
                 handleUpdateServerReply(msg);
                 break;
