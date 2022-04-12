@@ -88,7 +88,7 @@ public class TouchDisplayEmulatorController {
     // td_mouseClick
     public void td_mouseClick(MouseEvent mouseEvent) {
         int x = (int) mouseEvent.getX();
-	int y = (int) mouseEvent.getY();
+	    int y = (int) mouseEvent.getY();
 
 	log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
 	//send back to driver

@@ -22,7 +22,6 @@ public class TouchDisplayHandler extends HWHandler {
             case TD_MouseClicked:
                 slc.send(new Msg(id, mbox, Msg.Type.TD_MouseClicked, msg.getDetails()));
                 break;
-
             case TD_UpdateDisplay:
                 handleUpdateDisplay(msg);
                 slc.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, msg.getDetails()));
@@ -40,6 +39,7 @@ public class TouchDisplayHandler extends HWHandler {
             case SLS_ReplyDeliveryOrder:{
                 log.info("Handler receive replay from SLC " + msg.getDetails());
                 handleUpdateServerReply(msg);
+                break;
             }
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");

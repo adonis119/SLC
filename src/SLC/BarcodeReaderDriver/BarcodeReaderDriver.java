@@ -23,7 +23,6 @@ public class BarcodeReaderDriver extends HWHandler {
                 //receive from controller, send to slc
                 slc.send(new Msg(id, mbox, Msg.Type.BR_BarcodeRead, msg.getDetails()));
                 break;
-
             case BR_GoActive:
                 handleGoActive();
                 break;
