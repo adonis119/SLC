@@ -20,6 +20,11 @@ public class SLC extends AppThread {
 	private String currentScene = "BlankScreen";
 	private String passcodeInput = "";
 	private locker[] lockers = new locker[24];
+	private String barcodeHealth = "ACK";
+	private String touchDisplayHealth = "ACK";
+	private String octopusReaderHealth = "ACK";
+	private String lockerHealth = "ACK";
+	private String sLServerHealth = "ACK";
 
 	//------------------------------------------------------------
 	// SLC
@@ -59,7 +64,7 @@ public class SLC extends AppThread {
 			switch (msg.getType()) {
 				// Touch Display
 				case TD_MouseClicked:
-					log.info("MouseCLicked: " + msg.getDetails());
+					log.info("MouseCLicked: " + msg.getDetails() + "Barcode health " + barcodeHealth +" Touch Display health " + touchDisplayHealth);
 					processMouseClicked(msg);
 					break;
 				case TD_UpdateDisplay:
@@ -181,6 +186,44 @@ public class SLC extends AppThread {
 					break;
 				case PollAck:
 					log.info("PollAck: " + msg.getDetails());
+					switch (msg.getSender()){
+						case "BarcodeReaderDriver":
+							barcodeHealth = "ACK";
+							break;
+						case "TouchDisplayHandler":
+							touchDisplayHealth = "ACK";
+							break;
+						case "OctopusReaderDriver":
+							octopusReaderHealth = "ACK";
+							break;
+						case "LockerHandler":
+							lockerHealth = "ACK";
+							break;
+						case "SLServer":
+							sLServerHealth = "ACK";
+							break;
+					}
+					break;
+				case PollNak:
+					log.info("PollNak: " + msg.getDetails());
+					switch (msg.getSender()){
+						case "BarcodeReaderDriver":
+							barcodeHealth = "NAK";
+							break;
+						case "TouchDisplayHandler":
+							touchDisplayHealth = "NAK";
+							break;
+						case "OctopusReaderDriver":
+							octopusReaderHealth = "NAK";
+							break;
+						case "LockerHandler":
+							lockerHealth = "NAK";
+							//terminate
+							break;
+						case "SLServer":
+							sLServerHealth = "NAK";
+							break;
+					}
 					break;
 				case Terminate:
 					quit = true;
@@ -216,14 +259,25 @@ public class SLC extends AppThread {
 				log.info("Clicked on MainMenu");
 				// Click on Pick up x= 0~300(left=0,width=300), y= 270~340(bottom=140, height=70)
 				if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=270 && clickedPositionY<=340){
-					log.info("Clicked Pick up delivery");
-					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+					if(octopusReaderHealth.equals("ACK")) {
+						log.info("Clicked Pick up delivery");
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+					}
+					else  if (octopusReaderHealth.equals("NAK")){
+						//octopusReaderMBox.send(new Msg(id, mbox, Msg.Type., ""));
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
+					}
 				} else if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=270 && clickedPositionY<=340) {
 					// Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
 					log.info("Clicked Store delivery");
 					// Activate Barcode reader for scan barcode
-					barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoActive,""));
-					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
+					if(barcodeHealth.equals("ACK")) {
+						barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoActive, ""));
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
+					}
+					else if(barcodeHealth.equals("NAK")){
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
+					}
 				}else if(clickedPositionX>=0&&clickedPositionX<=300&&clickedPositionY >=340 && clickedPositionY<=410) {
 					// Click on Admin login x= 0~300(left=0,width=300), y=340~410(bottom=70, height=70)
 					log.info("Clicked Admin login");
@@ -326,6 +380,11 @@ public class SLC extends AppThread {
 				}
 
 			}
+			case "Maintenance":
+				// If user click the blank scene, direct to MainMenu, and set currentScene to "MainMenu"
+				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+				// currentScene = "MainMenu";
+				break;
 			default:
 				break;
 		}
