@@ -113,76 +113,76 @@ public class LockerEmulatorController {
         String status = "";
         switch(lockerId){
             case "lockerID1":
-                status = lockerID1.getText();
+                status = this.lockerID1.getText();
                 break;
             case "lockerID2":
-                status = lockerID2.getText();
+                status = this.lockerID2.getText();
                 break;
             case "lockerID3":
-                status = lockerID3.getText();
+                status = this.lockerID3.getText();
                 break;
             case "lockerID4":
-                status = lockerID4.getText();
+                status = this.lockerID4.getText();
                 break;
             case "lockerID5":
-                status = lockerID5.getText();
+                status = this.lockerID5.getText();
                 break;
             case "lockerID6":
-                status = lockerID6.getText();
+                status = this.lockerID6.getText();
                 break;
             case "lockerID7":
-                status = lockerID7.getText();
+                status = this.lockerID7.getText();
                 break;
             case "lockerID8":
-                status = lockerID8.getText();
+                status = this.lockerID8.getText();
                 break;
             case "lockerID9":
-                status = lockerID9.getText();
+                status = this.lockerID9.getText();
                 break;
             case "lockerID10":
-                status = lockerID10.getText();
+                status = this.lockerID10.getText();
                 break;
             case "lockerID11":
-                status = lockerID11.getText();
+                status = this.lockerID11.getText();
                 break;
             case "lockerID12":
-                status = lockerID12.getText();
+                status = this.lockerID12.getText();
                 break;
             case "lockerID13":
-                status = lockerID13.getText();
+                status = this.lockerID13.getText();
                 break;
             case "lockerID14":
-                status = lockerID14.getText();
+                status = this.lockerID14.getText();
                 break;
             case "lockerID15":
-                status = lockerID15.getText();
+                status = this.lockerID15.getText();
                 break;
             case "lockerID16":
-                status = lockerID16.getText();
+                status = this.lockerID16.getText();
                 break;
             case "lockerID17":
-                status = lockerID17.getText();
+                status = this.lockerID17.getText();
                 break;
             case "lockerID18":
-                status = lockerID18.getText();
+                status = this.lockerID18.getText();
                 break;
             case "lockerID19":
-                status = lockerID19.getText();
+                status = this.lockerID19.getText();
                 break;
             case "lockerID20":
-                status = lockerID20.getText();
+                status = this.lockerID20.getText();
                 break;
             case "lockerID21":
-                status = lockerID21.getText();
+                status = this.lockerID21.getText();
                 break;
             case "lockerID22":
-                status = lockerID22.getText();
+                status = this.lockerID22.getText();
                 break;
             case "lockerID23":
-                status = lockerID23.getText();
+                status = this.lockerID23.getText();
                 break;
             case "lockerID24":
-                status = lockerID24.getText();
+                status = this.lockerID24.getText();
                 break;
         }
         if(status.equals("Closed")){
@@ -197,76 +197,76 @@ public class LockerEmulatorController {
     public void openLocker(String lockerId){
         switch(lockerId){
             case "lockerID1":
-                lockerID1.setText("Opened");
+                this.lockerID1.setText("Opened");
                 break;
             case "lockerID2":
-                lockerID2.setText("Opened");
+                this.lockerID2.setText("Opened");
                 break;
             case "lockerID3":
-                lockerID3.setText("Opened");
+                this.lockerID3.setText("Opened");
                 break;
             case "lockerID4":
-                lockerID4.setText("Opened");
+                this.lockerID4.setText("Opened");
                 break;
             case "lockerID5":
-                lockerID5.setText("Opened");
+                this.lockerID5.setText("Opened");
                 break;
             case "lockerID6":
-                lockerID6.setText("Opened");
+                this.lockerID6.setText("Opened");
                 break;
             case "lockerID7":
-                lockerID7.setText("Opened");
+                this.lockerID7.setText("Opened");
                 break;
             case "lockerID8":
-                lockerID8.setText("Opened");
+                this.lockerID8.setText("Opened");
                 break;
             case "lockerID9":
-                lockerID9.setText("Opened");
+                this.lockerID9.setText("Opened");
                 break;
             case "lockerID10":
-                lockerID10.setText("Opened");
+                this.lockerID10.setText("Opened");
                 break;
             case "lockerID11":
-                lockerID11.setText("Opened");
+                this.lockerID11.setText("Opened");
                 break;
             case "lockerID12":
-                lockerID12.setText("Opened");
+                this.lockerID12.setText("Opened");
                 break;
             case "lockerID13":
-                lockerID13.setText("Opened");
+                this.lockerID13.setText("Opened");
                 break;
             case "lockerID14":
-                lockerID14.setText("Opened");
+                this.lockerID14.setText("Opened");
                 break;
             case "lockerID15":
-                lockerID15.setText("Opened");
+                this.lockerID15.setText("Opened");
                 break;
             case "lockerID16":
-                lockerID16.setText("Opened");
+                this.lockerID16.setText("Opened");
                 break;
             case "lockerID17":
-                lockerID17.setText("Opened");
+                this.lockerID17.setText("Opened");
                 break;
             case "lockerID18":
-                lockerID18.setText("Opened");
+                this.lockerID18.setText("Opened");
                 break;
             case "lockerID19":
-                lockerID19.setText("Opened");
+                this.lockerID19.setText("Opened");
                 break;
             case "lockerID20":
-                lockerID20.setText("Opened");
+                this.lockerID20.setText("Opened");
                 break;
             case "lockerID21":
-                lockerID21.setText("Opened");
+                this.lockerID21.setText("Opened");
                 break;
             case "lockerID22":
-                lockerID22.setText("Opened");
+                this.lockerID22.setText("Opened");
                 break;
             case "lockerID23":
-                lockerID23.setText("Opened");
+                this.lockerID23.setText("Opened");
                 break;
             case "lockerID24":
-                lockerID24.setText("Opened");
+                this.lockerID24.setText("Opened");
                 break;
         }
         lockerMBox.send(new Msg(id, lockerMBox, Msg.Type.Locker_op, lockerId));
