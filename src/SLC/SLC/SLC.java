@@ -20,6 +20,8 @@ public class SLC extends AppThread {
 	private String currentScene = "BlankScreen";
 	private String passcodeInput = "";
 	private locker[] lockers = new locker[24];
+	private String currentBarCode;
+	private int lockerOpenDoorCount = 0;
 
 	//------------------------------------------------------------
 	// SLC
@@ -123,6 +125,7 @@ public class SLC extends AppThread {
 							}
 							break;
 					}
+
 					if (msg.getDetails().equals("3") && lockerId.isEmpty()) {
 					} else if (lockerId.isEmpty()) {
 						log.info("Locker size " + msg.getDetails() + " is full. Try next size.");
@@ -130,7 +133,18 @@ public class SLC extends AppThread {
 					} else {
 						lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, lockerId));
 						lockers[index].doorStatus = 1;
+						// After choose a locker to store that delivery, display a screen show which locker is open
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+						try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, lockerId));
 					}
+
+
+
 					break;
 				// Octopus
 				case OR_OctopusCardRead:
@@ -314,7 +328,7 @@ public class SLC extends AppThread {
 				touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput,passcodeInput));
 				log.info(passcodeInput);
 				break;
-			case "StoreDelivery":{
+			case "StoreDelivery":
 				//X: 415.0 Y:380.0
 				log.info("Store Delivery clicked");
 				if(clickedPositionX>=340&&clickedPositionX<=640&&clickedPositionY >=340 && clickedPositionY<=410)
@@ -322,10 +336,18 @@ public class SLC extends AppThread {
 					log.info("Back button clicked!!");
 					barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoStandby,""));
 					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+					currentScene = "MainMenu";
 					break;
 				}
 
-			}
+			case "OpenLockerDoor":
+				log.info("Open Locker Door clicked");
+//				if(clickedPositionX>=570&&clickedPositionX<=670&&clickedPositionY>=10&&clickedPositionY<=50){
+//					log.info("Back button clicked!!");
+//					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+//					currentScene = "MainMenu";
+//				}
+				break;
 			default:
 				break;
 		}
@@ -357,4 +379,5 @@ public class SLC extends AppThread {
 			this.size = size;
 		}
 	}
+
 } // SLC
