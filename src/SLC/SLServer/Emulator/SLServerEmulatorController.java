@@ -49,7 +49,6 @@ public class SLServerEmulatorController {
         this.pollResp = pollRespCBox.getValue().toString();
     } // initialize
 
-
     //------------------------------------------------------------
     // buttonPressed
     public void buttonPressed(ActionEvent actionEvent) {
@@ -59,25 +58,19 @@ public class SLServerEmulatorController {
             case "Delivery Order 1":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1"));
                 break;
-
             case "Delivery Order 2":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2"));
                 break;
-
             case "Delivery Order 3":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3"));
                 break;
-
             case "Reset":
                 sLServerDeliveryOrderIDField.setText("");
                 break;
-
             case "Send Delivery Order to SLC":
                 sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_GetDeliveryOrder, sLServerDeliveryOrderIDField.getText()));
                 sLServerTextArea.appendText("Sending Delivery order NO. :" + sLServerDeliveryOrderIDField.getText()+"\n");
                 break;
-
-
             default:
                 log.warning(id + ": unknown button: [" + btn.getText() + "]");
                 break;

@@ -44,11 +44,16 @@ public class TouchDisplayHandler extends HWHandler {
             case passCode_wrong:
                 log.info(msg.getDetails());
                 handleWrongPasscode(msg);
-            break;
+                break;
             case SLS_ReplyOpenLocker:
                 log.info("Handler show which locker has opened :"+msg.getDetails());
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Store");
+                break;
+            case TD_PassCodeOpenLocker:
+                log.info("Handler show which locker has opened :"+msg.getDetails());
+                handleUpdateOpenLockerDoorDisplay(msg);
+                handleUpdateOpenLockerDoorTitleDetail("Pick");
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");

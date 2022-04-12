@@ -130,8 +130,8 @@ public class SLC extends AppThread {
                             }
                             break;
                     }
-
                     if (msg.getDetails().equals("3") && lockerId.isEmpty()) {
+                        log.warning("The locker is full! There are not locker for you.");
                     } else if (lockerId.isEmpty()) {
                         log.info("Locker size " + msg.getDetails() + " is full. Try next size.");
                         mbox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, String.valueOf(Integer.parseInt(msg.getDetails()) + 1)));
@@ -147,8 +147,6 @@ public class SLC extends AppThread {
                         }
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, lockerId));
                     }
-
-
                     break;
                 // Octopus
                 case OR_OctopusCardRead:
@@ -169,6 +167,7 @@ public class SLC extends AppThread {
                     break;
                 case Locker_cl:
                     log.info("The Locker is closed.  " + msg.getDetails());
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
                     int lockerIndex = 0;
                     for (int i = 0; i < 24; i++) {
                         if (lockers[i].lockerID.equals(msg.getDetails())) {
@@ -318,68 +317,67 @@ public class SLC extends AppThread {
                     }
                 }
                 else{
+                    // Check clicked number input
+                    // Check the clicked of del first, since only del can click when passcode already have 8 digits
+                    if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 382 && clickedPositionX <= 442) {
+                        log.info("Clicked Del");
+                        if (passcodeInput != "" && passcodeInput.length() > 0) {
+                            passcodeInput = passcodeInput.substring(0, passcodeInput.length() - 1);
+                        }
+                    }
+                    if (passcodeInput.length() >= 8) {
+                        // if already have 8 digits, not check the number click
+                        return;
+                    }
+                    if (clickedPositionY >= 150 && clickedPositionY <= 190) {
+                        //clicked first row, check x
+                        if (clickedPositionX >= 202 && clickedPositionX <= 262) {
+                            log.info("Clicked 1");
+                            passcodeInput += "1";
+                        } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
+                            log.info("Clicked 2");
+                            passcodeInput += "2";
+                        } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
+                            log.info("Clicked 3");
+                            passcodeInput += "3";
+                        }
+                    }
+                    if (clickedPositionY >= 205 && clickedPositionY <= 245) {
+                        //clicked second row, check x
+                        if (clickedPositionX >= 202 && clickedPositionX <= 262) {
+                            log.info("Clicked 4");
+                            passcodeInput += "4";
+                        } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
+                            log.info("Clicked 5");
+                            passcodeInput += "5";
+                        } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
+                            log.info("Clicked 6");
+                            passcodeInput += "6";
+                        }
+                    }
+                    if (clickedPositionY >= 260 && clickedPositionY <= 300) {
+                        //clicked 3rd row, check x
+                        if (clickedPositionX >= 202 && clickedPositionX <= 262) {
+                            log.info("Clicked 7");
+                            passcodeInput += "7";
+                        } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
+                            log.info("Clicked 8");
+                            passcodeInput += "8";
+                        } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
+                            log.info("Clicked 9");
+                            passcodeInput += "9";
+                        }
+                    }
+                    if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 292 && clickedPositionX <= 352) {
+                        log.info("Clicked 0");
+                        passcodeInput += "0";
+                    }
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput, passcodeInput));
+                    log.info(passcodeInput);
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
                 }
-                // Check clicked number input
-                // Check the clicked of del first, since only del can click when passcode already have 8 digits
-                if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 382 && clickedPositionX <= 442) {
-                    log.info("Clicked Del");
-                    if (passcodeInput != "" && passcodeInput.length() > 0) {
-                        passcodeInput = passcodeInput.substring(0, passcodeInput.length() - 1);
-                    }
-                }
-                if (passcodeInput.length() >= 8) {
-                    // if already have 8 digits, not check the number click
-                    return;
-                }
-                if (clickedPositionY >= 150 && clickedPositionY <= 190) {
-                    //clicked first row, check x
-                    if (clickedPositionX >= 202 && clickedPositionX <= 262) {
-                        log.info("Clicked 1");
-                        passcodeInput += "1";
-                    } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
-                        log.info("Clicked 2");
-                        passcodeInput += "2";
-                    } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
-                        log.info("Clicked 3");
-                        passcodeInput += "3";
-                    }
-                }
-                if (clickedPositionY >= 205 && clickedPositionY <= 245) {
-                    //clicked second row, check x
-                    if (clickedPositionX >= 202 && clickedPositionX <= 262) {
-                        log.info("Clicked 4");
-                        passcodeInput += "4";
-                    } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
-                        log.info("Clicked 5");
-                        passcodeInput += "5";
-                    } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
-                        log.info("Clicked 6");
-                        passcodeInput += "6";
-                    }
-                }
-                if (clickedPositionY >= 260 && clickedPositionY <= 300) {
-                    //clicked 3rd row, check x
-                    if (clickedPositionX >= 202 && clickedPositionX <= 262) {
-                        log.info("Clicked 7");
-                        passcodeInput += "7";
-                    } else if (clickedPositionX >= 292 && clickedPositionX <= 352) {
-                        log.info("Clicked 8");
-                        passcodeInput += "8";
-                    } else if (clickedPositionX >= 382 && clickedPositionX <= 442) {
-                        log.info("Clicked 9");
-                        passcodeInput += "9";
-                    }
-                }
-                if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 292 && clickedPositionX <= 352) {
-                    log.info("Clicked 0");
-                    passcodeInput += "0";
-                }
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput, passcodeInput));
-                log.info(passcodeInput);
                 break;
             case "StoreDelivery":
-                //X: 415.0 Y:380.0
                 log.info("Store Delivery clicked");
                 if (clickedPositionX >= 340 && clickedPositionX <= 640 && clickedPositionY >= 340 && clickedPositionY <= 410) {
                     log.info("Back button clicked!!");
@@ -388,32 +386,33 @@ public class SLC extends AppThread {
                     currentScene = "MainMenu";
                 }
                 break;
-
             case "OpenLockerDoor":
                 log.info("Open Locker Door clicked");
-//				if(clickedPositionX>=570&&clickedPositionX<=670&&clickedPositionY>=10&&clickedPositionY<=50){
-//					log.info("Back button clicked!!");
-//					touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-//					currentScene = "MainMenu";
-//				}
                 break;
             default:
                 break;
         }
     } // processMouseClicked
 
-
-
-	private void verifyPassCode(String passcodeInput) {
-		for (locker t : lockers) {
-			if (t.passCode.equals(passcodeInput)) {
-				lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
-				t.doorStatus = 1;
-				return;
-			}
-		}
-		touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,"The passcode is not correct"));
-	}
+    private void verifyPassCode(String passcodeInput) {
+        for (locker t : lockers) {
+            if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
+                lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, t.lockerID));
+                // After choose a locker to store that delivery, display a screen show which locker is open
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_PassCodeOpenLocker, t.lockerID));
+                t.doorStatus = 1;
+                return;
+            }
+        }
+        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, "The passcode is not correct"));
+        log.info("The passcode is not correct");
+    }
 
     private class locker {
         int doorStatus = 0; //0: the door is closed. 1: the door is closed.
