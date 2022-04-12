@@ -3,6 +3,8 @@ package SLC.SLServer.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
+
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
@@ -24,10 +26,12 @@ public class SLServerEmulatorController {
     private MBox sLServerMBox;
     private String pollResp;
     public TextField sLServerDeliveryOrderIDField;
-    public TextField sLServerDeliveryOrderBarcodeField;
+    public TextField sLServerDeliverySizeField;
+    public TextField sLServerDeliveryAmount;
     public TextField sLServerStatusField;
     public TextArea sLServerTextArea;
     public ChoiceBox pollRespCBox;
+    public ArrayList<deliveryOrder> deliveryOrderArrayList = new ArrayList<>();
 
 
     //------------------------------------------------------------
@@ -53,23 +57,62 @@ public class SLServerEmulatorController {
     // buttonPressed
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-
         switch (btn.getText()) {
             case "Delivery Order 1":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1"));
+                sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1.size"));
+                sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder1.amount"));
                 break;
             case "Delivery Order 2":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2"));
+                sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2.size"));
+                sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder2.amount"));
                 break;
             case "Delivery Order 3":
                 sLServerDeliveryOrderIDField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3"));
+                sLServerDeliverySizeField.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3.size"));
+                sLServerDeliveryAmount.setText(appKickstarter.getProperty("SLServer.DeliveryOrder3.amount"));
                 break;
             case "Reset":
                 sLServerDeliveryOrderIDField.setText("");
+                sLServerDeliverySizeField.setText("");
+                sLServerDeliveryAmount.setText("");
+                break;
+
+
+            case "Create Delivery Order to SL Server":
+                if (sLServerDeliveryOrderIDField.getText().equals("") || sLServerDeliverySizeField.getText().equals("") || sLServerDeliveryAmount.getText().equals("")) {
+                    sLServerTextArea.appendText("Please fill in all the input box! \n");
+                    return;
+                }
+
+                if (deliveryOrderArrayList.isEmpty()) {
+                    deliveryOrderArrayList.add(new deliveryOrder(sLServerDeliveryOrderIDField.getText(), Integer.parseInt(sLServerDeliverySizeField.getText()),
+                            Integer.parseInt(sLServerDeliveryAmount.getText())));
+                    sLServerTextArea.appendText("Created Delivery order :\n");
+                    sLServerTextArea.appendText("Delivery ID :" + sLServerDeliveryOrderIDField.getText() + "\n");
+                    sLServerTextArea.appendText("Delivery Size :" + sLServerDeliverySizeField.getText() + "\n");
+                    sLServerTextArea.appendText("Delivery Amount :" + sLServerDeliveryAmount.getText() + "\n");
+                } else {
+                    for (int i = 0; i < deliveryOrderArrayList.size(); i++) {
+                        if (deliveryOrderArrayList.get(i).orderId.compareTo(sLServerDeliveryOrderIDField.getText()) == 0) {
+                            sLServerTextArea.appendText("This delivery order ID is already exits ! \n");
+                            return;
+                        }
+                    }
+                    deliveryOrderArrayList.add(new deliveryOrder(sLServerDeliveryOrderIDField.getText(), Integer.parseInt(sLServerDeliverySizeField.getText()),
+                            Integer.parseInt(sLServerDeliveryAmount.getText())));
+                    sLServerTextArea.appendText("Created Delivery order :\n");
+                    sLServerTextArea.appendText("Delivery ID :" + sLServerDeliveryOrderIDField.getText() + "\n");
+                    sLServerTextArea.appendText("Delivery Size :" + sLServerDeliverySizeField.getText() + "\n");
+                    sLServerTextArea.appendText("Delivery Amount :" + sLServerDeliveryAmount.getText() + "\n");
+
+                }
                 break;
             case "Send Delivery Order to SLC":
                 sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_GetDeliveryOrder, sLServerDeliveryOrderIDField.getText()));
-                sLServerTextArea.appendText("Sending Delivery order NO. :" + sLServerDeliveryOrderIDField.getText()+"\n");
+                sLServerTextArea.appendText("Sending Delivery order NO. :" + sLServerDeliveryOrderIDField.getText() + "\n");
+
                 break;
             default:
                 log.warning(id + ": unknown button: [" + btn.getText() + "]");
@@ -80,7 +123,9 @@ public class SLServerEmulatorController {
 
     //------------------------------------------------------------
     // getters
-    public String getPollResp()       { return pollResp; }
+    public String getPollResp() {
+        return pollResp;
+    }
 
 
     private void updateSLServerStatus(String status) {
@@ -91,6 +136,18 @@ public class SLServerEmulatorController {
     //------------------------------------------------------------
     // appendTextArea
     public void appendTextArea(String status) {
-        sLServerTextArea.appendText(status+"\n");
+        sLServerTextArea.appendText(status + "\n");
     } // appendTextArea
+
+    private class deliveryOrder {
+        String orderId = "";
+        int size = 1;
+        int amount = 0;
+
+        deliveryOrder(String orderID, int size, int amount) {
+            this.orderId = orderID;
+            this.size = size;
+            this.amount = amount;
+        }
+    }
 }
