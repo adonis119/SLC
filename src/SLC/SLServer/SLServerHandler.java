@@ -34,7 +34,7 @@ public class SLServerHandler extends HWHandler {
                     else if(msg.getDetails().equals(appKickstarter.getProperty("BarcodeReader.Barcode3")))
                         slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,appKickstarter.getProperty("SLServer.DeliveryOrder3.size")));
                     else
-                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker,"2"));
+                        slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, "2"));
 
                 }
                  */
@@ -46,8 +46,8 @@ public class SLServerHandler extends HWHandler {
                 slc.send(new Msg(id, mbox, Msg.Type.SLS_ReplyOpenLocker, msg.getDetails()));
                 break;
             case SLS_RequestAmount:
-                log.info("SLServer receive LockerID from SLC " +msg.getDetails());
-                slc.send((new Msg(id, mbox, Msg.Type.SLS_ReplyAmount, "Amount $999")));
+                log.info("SLServer receive LockerID from SLC " + msg.getDetails());
+                slc.send((new Msg(id, mbox, Msg.Type.SLS_ReplyAmount, msg.getDetails())));
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -59,6 +59,11 @@ public class SLServerHandler extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
+
+    // handle fetch data
+    protected void fetchAmount(Msg msg) {
+        log.info(msg.getDetails());
+    }
     protected void verifyBarCode(Msg msg) {
         log.info(id + ": verify BarCode : " + msg.getDetails());
     } // handlePoll

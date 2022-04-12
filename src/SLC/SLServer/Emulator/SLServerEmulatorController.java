@@ -164,4 +164,10 @@ public class SLServerEmulatorController {
             this.amount = amount;
         }
     }
+
+    //------------------------------------------------------------
+    // fetch data
+    public void fetchAmount(String lockID) {
+        // send amount
+    } // fetch data
 }

@@ -158,7 +158,7 @@ public class SLC extends AppThread {
                     break;
                 case SLS_ReplyAmount:
                     log.info("Receive require amount from SLS: " + msg.getDetails());
-                    octopusReaderMBox.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, "$ 500.00")));
+                    octopusReaderMBox.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, msg.getDetails())));
                     break;
 
                 // Octopus
