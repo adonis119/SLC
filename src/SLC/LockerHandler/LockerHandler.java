@@ -19,7 +19,7 @@ public class LockerHandler extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
-            case SLS_ReplyOpenLocker:
+            case OpenLocker:
                 openLockerDoor(msg);
                 break;
             case Locker_op:
@@ -27,7 +27,6 @@ public class LockerHandler extends HWHandler {
                 break;
             case Locker_cl:
                 slc.send(new Msg(id, mbox, Msg.Type.Locker_cl, msg.getDetails()));
-                checkLockerStatus(msg);
                 break;
             case Locker_st:
                 //slc.send(new Msg(id, mbox, Msg.Type.Locker_st, msg.getDetails()));

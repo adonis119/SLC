@@ -103,10 +103,12 @@ public class Msg {
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
         /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrder,
         /** SLServer reply to open new locker*/ SLS_ReplyOpenLocker,
+        /** call locker to open locker*/        OpenLocker,
         /** Locker opened */		Locker_op,
         /** Locker closed */		Locker_cl,
         /** Locker check status */		Locker_st,
         /** Locker status is closed */		Locker_st_c,
         /** Locker status is opened*/		Locker_st_o,
+        /** PassCode is not correct, show to user */ passCode_wrong
     } // Type
 } // Msg
