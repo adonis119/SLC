@@ -92,9 +92,14 @@ public class BarcodeReaderEmulatorController {
 		break;
 
 	    case "Send Barcode":
-	            //send barcode to BarcodeReaderDriver
-                barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
-                barcodeReaderTextArea.appendText("Sending barcode " + barcodeNumField.getText()+"\n");
+	            //If Barcode reader status = Standby, Don't send barcode, otherwise send barcode to BarcodeReaderDriver
+                if(barcodeReaderStatusField.getText().equals("Active")) {
+                    barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
+                    barcodeReaderTextArea.appendText("Sending barcode " + barcodeNumField.getText() + "\n");
+                }
+                else if(barcodeReaderStatusField.getText().equals("Standby")){
+                    barcodeReaderTextArea.appendText("Error: Currently no store request!"+ "\n");
+                }
 		break;
 /*
 	    case "Activate/Standby":
