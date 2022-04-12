@@ -15,8 +15,8 @@
                 <Text style="-fx-font: 28 arial" text="scan the delivery: " AnchorPane.leftAnchor="105" AnchorPane.topAnchor="160" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="lightgray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="435.0" AnchorPane.leftAnchor="105" AnchorPane.topAnchor="240" />
                 <Text fx:id="barcodeInputBox" fill="black" style="-fx-font: 28 arial" text="" AnchorPane.leftAnchor="125" AnchorPane.topAnchor="245" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="0" />
-                <Text style="-fx-font: 28 arial" text="Back" AnchorPane.bottomAnchor="90" AnchorPane.rightAnchor="105" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="200.0" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="50.0" />
+                <Text style="-fx-font: 28 arial" text="Back" AnchorPane.bottomAnchor="77" AnchorPane.rightAnchor="112" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
                 <Text fx:id="replyInputBox" fill="RED" layoutX="105.0" layoutY="324.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check barcode availability here">
                <font>
