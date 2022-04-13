@@ -98,16 +98,25 @@ public class OctopusReaderEmulatorController {
                 break;
 
             case "Send Octopus card":
-                // TO-DO cal the amount enough to get fee? If ok return success to get $$ message?
-                if (processPayment()) {
-                    // if payment success
-                    octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_OctopusCardRead, octopusCardField.getText()));
-                    octopusReaderTextArea.appendText("Payment success!\n Your remaining amount is " + octopusAmountField.getText() + "\n");
-                    octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText() + "\n");
-                } else {
-                    // if payment fail
-                    octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_PaymentFailed, requestedAmountField.getText()));
-                    octopusReaderTextArea.appendText("Payment failed. Not enough money to pay." + "\n");
+                if (octopusReaderStatusField.getText().equals("Active")) {
+                    if (!octopusCardField.getText().equals("") && !octopusAmountField.getText().equals("")) {
+                        if (processPayment()) {
+                            // if payment success
+                            octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_OctopusCardRead, octopusCardField.getText()));
+                            octopusReaderTextArea.appendText("Payment success!\n Your remaining amount is " + octopusAmountField.getText() + "\n");
+                            octopusReaderTextArea.appendText("Sending Octopus Card NO. :" + octopusCardField.getText() + "\n");
+                            requestedAmountField.setText("");
+                        } else {
+                            // if payment fail
+                            octopusReaderMBox.send(new Msg(id, octopusReaderMBox, Msg.Type.OR_PaymentFailed, requestedAmountField.getText()));
+                            octopusReaderTextArea.appendText("Payment failed. Not enough money to pay." + "\n");
+                        }
+                    } else {
+                        // Missing field
+                        octopusReaderTextArea.appendText("Error: Please fill in the missing field" + "\n");
+                    }
+                } else if (octopusReaderStatusField.getText().equals("Standby")) {
+                    octopusReaderTextArea.appendText("Error: Currently not available." + "\n");
                 }
                 break;
 

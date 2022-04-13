@@ -72,6 +72,7 @@ public class OctopusReaderEmulator extends OctopusReaderDriver {
         // fixme
         super.handleGoStandby();
         octopusReaderEmulatorController.appendTextArea("Octopus Reader Standby");
+        octopusReaderEmulatorController.goStandby();
     } // handleGoStandby
 
 
