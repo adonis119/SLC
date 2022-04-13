@@ -3,6 +3,7 @@ package SLC.SLC;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+import javafx.application.Application;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class SLC extends AppThread {
                     // Update currentScene first (For the right bottom selection hacking scene or normal update display)
                     log.info("DisplayUpdated: " + msg.getDetails());
                     this.currentScene = msg.getDetails();
-                    if(msg.getDetails().equals("AdminPage")){
+                    if (msg.getDetails().equals("AdminPage")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateAdminPage, lockers.toString()));
                     }
                     break;
@@ -195,9 +196,9 @@ public class SLC extends AppThread {
                         Random rnd = new Random();
                         String tempPassCode = String.valueOf(10000000 + rnd.nextInt(90000000));
 
-                        if(!allPassCode.isEmpty()){
-                            for(int i =0;i<allPassCode.size();i++){
-                                if(allPassCode.get(i).equals(tempPassCode)){
+                        if (!allPassCode.isEmpty()) {
+                            for (int i = 0; i < allPassCode.size(); i++) {
+                                if (allPassCode.get(i).equals(tempPassCode)) {
                                     tempPassCode = String.valueOf(10000000 + rnd.nextInt(90000000));
                                     i = 0;
                                 }
@@ -217,13 +218,13 @@ public class SLC extends AppThread {
                     break;
                 case Locker_st_c:
                     log.info(msg.getDetails());
-                    if(currentScene.equals("AdminPage")){
+                    if (currentScene.equals("AdminPage")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Locker_st_c, msg.getDetails()));
                     }
                     break;
                 case Locker_st_o:
                     log.info(msg.getDetails());
-                    if(currentScene.equals("AdminPage")){
+                    if (currentScene.equals("AdminPage")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Locker_st_o, msg.getDetails()));
                     }
                     //lockerMBox.send(msg);
@@ -292,11 +293,11 @@ public class SLC extends AppThread {
         int clickedPositionY = Integer.parseInt(splitClickedPointed[1]);
         log.info("MouseX: " + splitClickedPointed[0]);
         log.info("MouseY: " + splitClickedPointed[1]);
-        if(touchDisplayHealth.equals("NAK"))
+        if (touchDisplayHealth.equals("NAK"))
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
         switch (currentScene) {
             case "BlankScreen":
-                if(touchDisplayHealth.equals("NAK"))
+                if (touchDisplayHealth.equals("NAK"))
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                 else
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
@@ -310,10 +311,10 @@ public class SLC extends AppThread {
                 log.info("Clicked on MainMenu");
                 // Click on Pick up x= 0~300(left=0,width=300), y= 270~340(bottom=140, height=70)
                 if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 270 && clickedPositionY <= 340) {
-                    if (barcodeHealth.equals("ACK")&&lockerHealth.equals("ACK")) {
+                    if (barcodeHealth.equals("ACK") && lockerHealth.equals("ACK")) {
                         log.info("Clicked Pick up delivery");
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
-                    } else if (barcodeHealth.equals("NAK")||lockerHealth.equals("NAK")) {
+                    } else if (barcodeHealth.equals("NAK") || lockerHealth.equals("NAK")) {
                         //octopusReaderMBox.send(new Msg(id, mbox, Msg.Type., ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                     }
@@ -321,10 +322,10 @@ public class SLC extends AppThread {
                     // Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
                     log.info("Clicked Store delivery");
                     // Activate Barcode reader for scan barcode
-                    if (barcodeHealth.equals("ACK")&&lockerHealth.equals("ACK")) {
+                    if (barcodeHealth.equals("ACK") && lockerHealth.equals("ACK")) {
                         barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoActive, ""));
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "StoreDelivery"));
-                    } else if (barcodeHealth.equals("NAK")||lockerHealth.equals("NAK")) {
+                    } else if (barcodeHealth.equals("NAK") || lockerHealth.equals("NAK")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                     }
                 } else if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 340 && clickedPositionY <= 410) {
@@ -351,8 +352,7 @@ public class SLC extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         currentScene = "MainMenu";
                     }
-                }
-                else{
+                } else {
                     // Check clicked number input
                     // Check the clicked of del first, since only del can click when passcode already have 8 digits
                     if (clickedPositionY >= 315 && clickedPositionY <= 355 && clickedPositionX >= 382 && clickedPositionX <= 442) {
@@ -410,7 +410,7 @@ public class SLC extends AppThread {
                     }
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdatePasscodeInput, passcodeInput));
                     log.info(passcodeInput);
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong,""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, ""));
                 }
                 break;
             case "StoreDelivery":
@@ -426,11 +426,11 @@ public class SLC extends AppThread {
                 log.info("Open Locker Door clicked");
                 break;
             case "Payment":
-                if (clickedPositionY >= 390 && clickedPositionY <= 430&&clickedPositionX >= 380 && clickedPositionX <= 540) {
-                        //Clicked Back to Menu
-                        log.info("Clicked on Back");
-                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
-                        currentScene = "BlankScreen";
+                if (clickedPositionY >= 390 && clickedPositionY <= 430 && clickedPositionX >= 380 && clickedPositionX <= 540) {
+                    //Clicked Back to Menu
+                    log.info("Clicked on Back");
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
+                    currentScene = "BlankScreen";
                 }
                 break;
             case "AdminPage":
@@ -438,20 +438,19 @@ public class SLC extends AppThread {
                     //Clicked Back to Menu
 
 
-                    if(clickedPositionY>=290&&clickedPositionY<=330){
+                    if (clickedPositionY >= 290 && clickedPositionY <= 330) {
                         log.info("Clicked on Back");
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
-                    }else if(clickedPositionY>=340&&clickedPositionY<=380){
-                        //Clicked R
-                    }else if(clickedPositionY>=390&&clickedPositionY<=430){
-                        //Clicked T
+
+                    } else if (clickedPositionY >= 390 && clickedPositionY <= 430) {
+                        //Clicked Terminate terminate all thread by mbox and exit program
                         mbox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
                         barcodeReaderMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
                         touchDisplayMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
                         octopusReaderMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
                         sLServerMbox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
                         lockerMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-
+                        System.exit(0);
                     }
                 }
 
@@ -463,7 +462,7 @@ public class SLC extends AppThread {
 
     private void verifyPassCode(String passcodeInput) {
         for (locker t : lockers) {
-            if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
+            if (!t.passCode.isEmpty() && t.passCode.equals(passcodeInput)) {
                 allPassCode.remove(t.lockerID);
                 this.currentLocker = t;
                 octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoActive, ""));
