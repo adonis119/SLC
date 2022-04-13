@@ -92,6 +92,7 @@ public class SLC extends AppThread {
                 // Barcode
                 case BR_BarcodeRead:
                     log.info("Received Barcode " + msg.getDetails());
+                    currentBarCode = msg.getDetails().split("-")[0] + msg.getDetails().split("-")[1];
                     touchDisplayMBox.send(msg);
                     break;
 
@@ -145,7 +146,7 @@ public class SLC extends AppThread {
                     } else {
                         lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, lockerId));
                         lockers[index].doorStatus = 1;
-                        lockers[index].lockerID = currentBarCode;
+                        lockers[index].deliveryOrderID = currentBarCode;
                         currentBarCode = "";
                         // After choose a locker to store that delivery, display a screen show which locker is open
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
@@ -437,7 +438,7 @@ public class SLC extends AppThread {
             if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
                 allPassCode.remove(t.lockerID);
                 this.currentLocker = t;
-                sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, t.lockerID));
+                sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, t.deliveryOrderID));
                 log.info("Waiting for payment");
                 return;
             }
@@ -465,6 +466,7 @@ public class SLC extends AppThread {
         int emptyStatus = 0; //0: the locker is empty. 1: the locker is not empty.
         String lockerID; // 3 different size (1: small, 2: medium, 3: big)
         String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
+        String deliveryOrderID = "";
         int size = 1;
 
         locker(String lockerID, int size) {
