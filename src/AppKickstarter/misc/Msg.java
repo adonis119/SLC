@@ -104,6 +104,8 @@ public class Msg {
         /** SLServer send delivery order*/ SLS_GetDeliveryOrder,
         /** SLServer reply delivery order*/ SLS_ReplyDeliveryOrderForGui,
         /** SLServer reply to open new locker*/ SLS_ReplyOpenLocker,
+        /** SLServer request for octopus amount*/ SLS_RequestAmount,
+        /** SLServer reply for octopus amount*/ SLS_ReplyAmount,
         /** call locker to open locker*/        OpenLocker,
         /** Locker opened */		Locker_op,
         /** Locker closed */		Locker_cl,

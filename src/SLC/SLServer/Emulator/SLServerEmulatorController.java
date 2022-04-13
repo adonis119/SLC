@@ -156,12 +156,25 @@ public class SLServerEmulatorController {
     private class deliveryOrder {
         String orderId = "";
         int size = 1;
-        int amount = 0;
+        double amount = 0;
 
-        deliveryOrder(String orderID, int size, int amount) {
+        deliveryOrder(String orderID, int size, double amount) {
             this.orderId = orderID;
             this.size = size;
             this.amount = amount;
         }
     }
+
+    //------------------------------------------------------------
+    // fetch data
+    public void fetchAmount(String deliveryID) {
+        // send amount
+        for (int i = 0; i < deliveryOrderArrayList.size(); i++) {
+            deliveryOrder current = deliveryOrderArrayList.get(i);
+            if (current.orderId.equals(deliveryID)) {
+                sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyAmount, ("$ " + current.amount)));
+            }
+
+        }
+    } // fetch data
 }
