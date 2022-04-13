@@ -163,15 +163,27 @@ public class SLC extends AppThread {
                 case SLS_ReplyAmount:
                     log.info("Receive require amount from SLS: " + msg.getDetails());
                     octopusReaderMBox.send((new Msg(id, mbox, Msg.Type.OR_PaymentAmount, msg.getDetails())));
-
                     currentAmount = Double.parseDouble(msg.getDetails().substring(1));
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_OctopusPage, String.valueOf(currentAmount)));
+                    System.out.println(currentAmount);
+                    if(!(currentAmount==0.0)){
+                        log.info("Waiting for payment");
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Payment"));
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_OctopusPage, String.valueOf(currentAmount)));
+                    }
+                    else {
+                        completePayment(false);
+                    }
                     break;
 
                 // Octopus
                 case OR_OctopusCardRead:
                     log.info("Payment success! The octopus card number is " + msg.getDetails());
-                    completePayment();
+                    completePayment(true);
                     break;
                 case OR_PaymentFailed:
                     log.info("Payment Failed! Please make sure to have at least " + msg.getDetails());
@@ -471,24 +483,18 @@ public class SLC extends AppThread {
                 this.currentLocker = t;
                 octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoActive, ""));
                 sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, t.deliveryOrderID));
-                log.info("Waiting for payment");
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Payment"));
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                log.info("The passcode is not correct");
                 return;
             }
         }
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, "The passcode is not correct"));
+        log.info("The passcode is not correct");
     }
 
-    private void completePayment() {
-        octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoStandby, ""));
-        sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, currentLocker.lockerID));
+    private void completePayment(Boolean isPay) {
+        if(true){
+            octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoStandby, ""));
+            sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, currentLocker.lockerID));
+        }
         lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, currentLocker.lockerID));
         // After choose a locker to store that delivery, display a screen show which locker is open
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
