@@ -43,8 +43,7 @@
                 <Text text="Admin page only can restart/terminate" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="300" fill="RED" style="-fx-font: 15 arial"/>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="150" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
                 <Text text="Back to Menu" AnchorPane.bottomAnchor="160" AnchorPane.rightAnchor="122" style="-fx-font: 18 arial" fill="black"/>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="100" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
-                <Text text="Restart system" AnchorPane.bottomAnchor="110" AnchorPane.rightAnchor="122" style="-fx-font: 18 arial" fill="black"/>
+
                 <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
                 <Text text="Terminate system" AnchorPane.bottomAnchor="60" AnchorPane.rightAnchor="112" style="-fx-font: 18 arial" fill="black"/>
             </children>
