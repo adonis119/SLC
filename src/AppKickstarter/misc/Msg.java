@@ -117,5 +117,6 @@ public class Msg {
         /** Update the admin lockers status*/ TD_UpdateAdminPage,
         /** When Octopus function is called, call to open correspond page*/ TD_OctopusPage,
         /** Send passcode to server when a delivery stored on locker*/SLS_SendPasscodeData,
+        /** Send Delivery Order ID to SL server when it stored to our locker */ SLS_SendDeliveryData,
     } // Type
 } // Msg

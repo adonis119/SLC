@@ -224,8 +224,9 @@ public class SLC extends AppThread {
                         lockers[lockerIndex].passCode = tempPassCode;
                         allPassCode.add(tempPassCode);
                         log.info("The passCode of " + msg.getDetails() + " is " + lockers[lockerIndex].passCode);
-                        String deliveryOrderIDWithPasscode = "Delivery Order: "+lockers[lockerIndex].deliveryOrderID+" ,Passcode: "+tempPassCode;
+                        String deliveryOrderIDWithPasscode = "Order Stored, ID: "+lockers[lockerIndex].deliveryOrderID+" ,Passcode: "+tempPassCode;
                         sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_SendPasscodeData,deliveryOrderIDWithPasscode));
+                        sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_SendDeliveryData,lockers[lockerIndex].deliveryOrderID));
                     } else {
                         lockers[lockerIndex].emptyStatus = 0;
                     }

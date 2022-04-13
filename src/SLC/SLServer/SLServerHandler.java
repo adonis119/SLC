@@ -55,6 +55,9 @@ public class SLServerHandler extends HWHandler {
             case SLS_SendPasscodeData:
                 handleReceivedPasscode(msg);
                 break;
+            case SLS_SendDeliveryData:
+                handleStoredOrderStatus(msg);
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -70,11 +73,17 @@ public class SLServerHandler extends HWHandler {
     protected void fetchAmount(Msg msg) {
         log.info(msg.getDetails());
     }
+
     protected void verifyBarCode(Msg msg) {
         log.info(id + ": verify BarCode : " + msg.getDetails());
     } // handlePoll
-    protected void handleReceivedPasscode(Msg msg){
+
+    protected void handleReceivedPasscode(Msg msg) {
         log.info(id + ": received delivery order and passcode : " + msg.getDetails());
+    }
+
+    protected void handleStoredOrderStatus(Msg msg) {
+        log.info(id+": This delivery order has been stored : "+msg.getDetails());
     }
 }
 

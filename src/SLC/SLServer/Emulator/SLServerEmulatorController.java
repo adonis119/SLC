@@ -143,7 +143,7 @@ public class SLServerEmulatorController {
         String tempOrderID = orderID.split("-")[0]+orderID.split("-")[1] ;
         if(!deliveryOrderArrayList.isEmpty()){
             for(int i =0;i<deliveryOrderArrayList.size();i++){
-                if(deliveryOrderArrayList.get(i).orderId.equals(tempOrderID)){
+                if(deliveryOrderArrayList.get(i).orderId.equals(tempOrderID)&&deliveryOrderArrayList.get(i).deliveryState==0){
                     sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyDeliveryOrderForGui, "This barcode is available!"));
                     sLServerMBox.send(new Msg(id, sLServerMBox, Msg.Type.SLS_ReplyOpenLocker, String.valueOf(deliveryOrderArrayList.get(i).size)));
                     return;
@@ -157,6 +157,7 @@ public class SLServerEmulatorController {
         String orderId = "";
         int size = 1;
         double amount = 0;
+        int deliveryState =0; // 0= wait for store delivery, 1= stored delivery on a locker, 2= delivery have picked up;
 
         deliveryOrder(String orderID, int size, double amount) {
             this.orderId = orderID;
@@ -179,5 +180,19 @@ public class SLServerEmulatorController {
     } // fetch data
     public void sl_showDeliveryOrderAndPasscode(String orderAndPasscode){
         sLServerTextArea.appendText(orderAndPasscode+ "\n");
+    }
+    public void handleStoredDeliveryOrderChangeStatus(String orderID){
+        // In the real one, it should make other backup to store all the used deliveryOrder, be simple our emulator didn't added backup, just remove it if the order has stored
+        boolean haveThisId = false;
+        int thatIDindex = 0;
+         for(int i=0; i<deliveryOrderArrayList.size();i++){
+             if(deliveryOrderArrayList.get(i).orderId.equals(orderID)){
+                 haveThisId = true;
+                 thatIDindex = i;
+             }
+         }
+         if(haveThisId){
+             deliveryOrderArrayList.get(thatIDindex).deliveryState = 1;
+         }
     }
 }

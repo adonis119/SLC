@@ -88,5 +88,9 @@ public class SLServerEmulator extends SLServerHandler {
             slServerEmulatorController.sl_showDeliveryOrderAndPasscode(msg.getDetails());
     }
 
+    protected void handleStoredOrderStatus(Msg msg) {
+        slServerEmulatorController.handleStoredDeliveryOrderChangeStatus(msg.getDetails());
+    }
+
 }
 
