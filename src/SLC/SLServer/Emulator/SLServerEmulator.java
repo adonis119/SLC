@@ -84,6 +84,9 @@ public class SLServerEmulator extends SLServerHandler {
     protected void verifyBarCode(Msg msg) {
         slServerEmulatorController.verifyOrder(msg.getDetails());
     } // handlePoll
+    protected void handleReceivedPasscode(Msg msg){
+            slServerEmulatorController.sl_showDeliveryOrderAndPasscode(msg.getDetails());
+    }
 
 }
 
