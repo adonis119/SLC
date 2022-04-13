@@ -78,6 +78,9 @@ public class SLServerEmulator extends SLServerHandler {
         }
     } // handlePoll
 
+    protected  void fetchAmount(Msg msg){
+        slServerEmulatorController.fetchAmount(msg.getDetails());
+    }
     protected void verifyBarCode(Msg msg) {
         slServerEmulatorController.verifyOrder(msg.getDetails());
     } // handlePoll

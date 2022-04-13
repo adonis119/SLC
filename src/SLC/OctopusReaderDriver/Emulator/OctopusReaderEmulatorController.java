@@ -68,8 +68,6 @@ public class OctopusReaderEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
-        // change below line for request octopus payment
-        requestedAmountField.setText(appKickstarter.getProperty("OctopusReader.Requested.Amount"));
     } // initialize
 
 
