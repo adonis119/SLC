@@ -52,6 +52,9 @@ public class SLServerHandler extends HWHandler {
             case SLS_ReplyAmount:
                 slc.send((new Msg(id, mbox, Msg.Type.SLS_ReplyAmount, msg.getDetails())));
                 break;
+            case SLS_SendPasscodeData:
+                handleReceivedPasscode(msg);
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -70,5 +73,8 @@ public class SLServerHandler extends HWHandler {
     protected void verifyBarCode(Msg msg) {
         log.info(id + ": verify BarCode : " + msg.getDetails());
     } // handlePoll
+    protected void handleReceivedPasscode(Msg msg){
+        log.info(id + ": received delivery order and passcode : " + msg.getDetails());
+    }
 }
 
