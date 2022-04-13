@@ -177,4 +177,7 @@ public class SLServerEmulatorController {
 
         }
     } // fetch data
+    public void sl_showDeliveryOrderAndPasscode(String orderAndPasscode){
+        sLServerTextArea.appendText(orderAndPasscode+ "\n");
+    }
 }

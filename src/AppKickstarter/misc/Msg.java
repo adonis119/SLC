@@ -116,5 +116,6 @@ public class Msg {
         /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker,
         /** Update the admin lockers status*/ TD_UpdateAdminPage,
         /** When Octopus function is called, call to open correspond page*/ TD_OctopusPage,
+        /** Send passcode to server when a delivery stored on locker*/SLS_SendPasscodeData,
     } // Type
 } // Msg
