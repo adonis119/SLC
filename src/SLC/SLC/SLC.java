@@ -207,9 +207,16 @@ public class SLC extends AppThread {
                     //lockerMBox.send(msg);
                     break;
                 case Locker_st_c:
+                    log.info(msg.getDetails());
+                    if(currentScene.equals("AdminPage")){
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Locker_st_c, msg.getDetails()));
+                    }
+                    break;
                 case Locker_st_o:
                     log.info(msg.getDetails());
-                    log.info(msg.getDetails());
+                    if(currentScene.equals("AdminPage")){
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Locker_st_o, msg.getDetails()));
+                    }
                     //lockerMBox.send(msg);
                     break;
                 case PollAck:
@@ -314,9 +321,7 @@ public class SLC extends AppThread {
                 } else if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 340 && clickedPositionY <= 410) {
                     // Click on Admin login x= 0~300(left=0,width=300), y=340~410(bottom=70, height=70)
                     log.info("Clicked Admin login");
-                } else if (clickedPositionX >= 340 && clickedPositionX <= 640 && clickedPositionY >= 340 && clickedPositionY <= 410) {
-                    // Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=70, height=70)
-                    log.info("Clicked Refund");
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "AdminPage"));
                 }
                 break;
             case "Confirmation":
@@ -418,6 +423,29 @@ public class SLC extends AppThread {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
                         currentScene = "BlankScreen";
                 }
+                break;
+            case "AdminPage":
+                if (clickedPositionX >= 380 && clickedPositionX <= 540) {
+                    //Clicked Back to Menu
+
+
+                    if(clickedPositionY>=290&&clickedPositionY<=330){
+                        log.info("Clicked on Back");
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
+                    }else if(clickedPositionY>=340&&clickedPositionY<=380){
+                        //Clicked R
+                    }else if(clickedPositionY>=390&&clickedPositionY<=430){
+                        //Clicked T
+                        mbox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+                        barcodeReaderMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+                        touchDisplayMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+                        octopusReaderMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+                        sLServerMbox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+                        lockerMBox.send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+
+                    }
+                }
+
                 break;
             default:
                 break;

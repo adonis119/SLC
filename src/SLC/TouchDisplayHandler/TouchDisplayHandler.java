@@ -57,6 +57,14 @@ public class TouchDisplayHandler extends HWHandler {
                 break;
             case TD_UpdateAdminPage:
                 log.info("Handler update admin status");
+                handleAdminPageGetLockerStatus();
+                break;
+            case Locker_st:
+                // Check locker status 1by1 request by admin page
+                slc.send(new Msg(id, mbox, Msg.Type.Locker_st, msg.getDetails()));
+                break;
+            case Locker_st_c:
+                handleUpdateAdminLockerStatus(msg);
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -98,5 +106,11 @@ public class TouchDisplayHandler extends HWHandler {
     }
     protected void handleShowPaymentError(Msg msg){
         log.info(id + ": update payment error and show  " + msg.getDetails());
+    }
+    protected void handleUpdateAdminLockerStatus(Msg msg){
+       log.info(id+": update admin page locker state"+ msg.getDetails());
+    }
+    protected void handleAdminPageGetLockerStatus(){
+        log.info(id+": get admin page locker status");
     }
 } // TouchDisplayHandler

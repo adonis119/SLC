@@ -19,6 +19,7 @@
 <!--            <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="10" AnchorPane.rightAnchor="10" fill="lightgray" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="100.0" />-->
 <!--            <Text fx:id="touchDisplayLockerTimerText" text="44 S" AnchorPane.topAnchor="15" AnchorPane.rightAnchor="30" style="-fx-font: 28 arial"/>-->
             <children>
+
                 <Rectangle fx:id="touchDisplayAdminLocker1" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0" fill="lightgray" height="86.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
                 <Rectangle fx:id="touchDisplayAdminLocker3" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="95" AnchorPane.leftAnchor="0" fill="lightgray" height="57.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
                 <Rectangle fx:id="touchDisplayAdminLocker5" arcHeight="5.0" arcWidth="5.0" AnchorPane.topAnchor="161" AnchorPane.leftAnchor="0" fill="lightgray" height="42.0" stroke="BLACK" strokeType="OUTSIDE" width="100" />
@@ -38,7 +39,14 @@
                 <Text fx:id="touchDisplayAdminLockerRightText" text="Right" AnchorPane.topAnchor="140" AnchorPane.leftAnchor="400" fill="BLACK" style="-fx-font: 20 arial"/>
                 <Text text="Current Locker side:" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="250" style="-fx-font: 20 arial"/>
                 <Text fx:id="touchDisplayAdminLockerSide" text="Left" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="450" fill="RED" style="-fx-font: 20 arial"/>
-                <Text text="*Click Left/Right to switch the selected locker side" AnchorPane.topAnchor="210" AnchorPane.leftAnchor="300" fill="RED" style="-fx-font: 15 arial"/>
+                <Text text="Some problem of get status of all lockers" AnchorPane.topAnchor="210" AnchorPane.leftAnchor="300" fill="RED" style="-fx-font: 15 arial"/>
+                <Text text="Admin page only can restart/terminate" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="300" fill="RED" style="-fx-font: 15 arial"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="150" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
+                <Text text="Back to Menu" AnchorPane.bottomAnchor="160" AnchorPane.rightAnchor="122" style="-fx-font: 18 arial" fill="black"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="100" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
+                <Text text="Restart system" AnchorPane.bottomAnchor="110" AnchorPane.rightAnchor="122" style="-fx-font: 18 arial" fill="black"/>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
+                <Text text="Terminate system" AnchorPane.bottomAnchor="60" AnchorPane.rightAnchor="112" style="-fx-font: 18 arial" fill="black"/>
             </children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
         </AnchorPane>
