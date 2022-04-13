@@ -145,6 +145,7 @@ Smart Locker Controlling System
     Step 7: Use Octopus readter to pay
     Step 8: Have payment success Touch Display will show which locker have opened
     Step 9: Go to locker GUI close that door(That means you have pick up the delivery)
+    Passcode can checked on SLServer GUI, it will send to the SLServer if a delivery has storged to a locker
 ### How to Store delivery?
     Step 1: Click Touch Display GUI to start the system.
     Step 2: Select "Store delivery" text on the Main Screen.
