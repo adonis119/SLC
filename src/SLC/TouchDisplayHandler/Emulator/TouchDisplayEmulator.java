@@ -159,7 +159,14 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     protected void handleShowPaymentError(Msg msg){
         touchDisplayEmulatorController.td_showPaymentError(msg.getDetails());
     }
-    protected void handleUpdateOctopusDisplay(String amount){
+
+    protected void handleUpdateOctopusDisplay(String amount) {
         touchDisplayEmulatorController.td_openOctopusDisplay(amount);
+    }
+    protected void handleUpdateAdminLockerStatus(Msg msg){
+        touchDisplayEmulatorController.td_adminPageHandleUpdateLockerStatus(msg.getDetails());
+    }
+    protected void handleAdminPageGetLockerStatus(){
+        touchDisplayEmulatorController.td_adminPageGetLockerStatus();
     }
 } // TouchDisplayEmulator

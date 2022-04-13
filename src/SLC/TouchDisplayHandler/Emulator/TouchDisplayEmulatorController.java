@@ -12,6 +12,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
@@ -24,7 +25,7 @@ public class TouchDisplayEmulatorController {
     private Logger log;
     private TouchDisplayEmulator touchDisplayEmulator;
     private MBox touchDisplayMBox;
-    private MBox slServerMbox;
+    private MBox sLCMbox;
     private String selectedScreen;
     private String pollResp;
     public ChoiceBox screenSwitcherCBox;
@@ -59,6 +60,20 @@ public class TouchDisplayEmulatorController {
             "lockerID15", "lockerID16", "lockerID7", "lockerID8"};
     private String[] leftLockerIDList = {"lockerID1", "lockerID2", "lockerID9", "lockerID10", "lockerID17", "lockerID18", "lockerID19", "lockerID20",
             "lockerID11", "lockerID12", "lockerID3", "lockerID4"};
+    // Admin rectangle and text
+    public Rectangle touchDisplayAdminLocker1;
+    public Rectangle touchDisplayAdminLocker2;
+    public Rectangle touchDisplayAdminLocker3;
+    public Rectangle touchDisplayAdminLocker4;
+    public Rectangle touchDisplayAdminLocker5;
+    public Rectangle touchDisplayAdminLocker6;
+    public Rectangle touchDisplayAdminLocker7;
+    public Rectangle touchDisplayAdminLocker8;
+    public Rectangle touchDisplayAdminLocker9;
+    public Rectangle touchDisplayAdminLocker10;
+    public Rectangle touchDisplayAdminLocker11;
+    public Rectangle touchDisplayAdminLocker12;
+    private boolean adminShowLockerIsLeft = true;
 
     //------------------------------------------------------------
     // initialize
@@ -277,9 +292,76 @@ public class TouchDisplayEmulatorController {
             this.touchDisplayPaymentError2.setOpacity(100);
         }
     }
+    public void td_adminPageGetLockerStatus(){
 
-    public void td_updateAdminPageAllLockerStatus(){
+        if(selectedScreen=="AdminPage"){
+            if(!adminShowLockerIsLeft){
+                for(int i=0; i<rightLockerIDList.length;i++){
+                    touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.Locker_st, rightLockerIDList[i]));
+                }
+            }else{
+                for(int i=0; i<leftLockerIDList.length;i++){
+                    touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.Locker_st, leftLockerIDList[i]));
+                }
+            }
 
+        }
     }
+    public  void td_adminPageHandleUpdateLockerStatus(String lockerID){
+        switch(lockerID){
+            case "lockerID1":
+            case "lockerID5":
+                // Locker 1 and locker 5 is the number 1 locker of left/right
+                this.touchDisplayAdminLocker1.setFill(Color.RED);
+                break;
+            case "lockerID2":
+            case "lockerID6":
+                this.touchDisplayAdminLocker2.setFill(Color.RED);
+                break;
+            case "lockerID9":
+            case "lockerID13":
+                this.touchDisplayAdminLocker3.setFill(Color.RED);
+                break;
+            case "lockerID10":
+            case "lockerID14":
+                this.touchDisplayAdminLocker4.setFill(Color.RED);
+                break;
+            case "lockerID17":
+            case "lockerID21":
+                this.touchDisplayAdminLocker5.setFill(Color.RED);
+                break;
+            case "lockerID18":
+            case "lockerID22":
+                this.touchDisplayAdminLocker6.setFill(Color.RED);
+                break;
+            case "lockerID19":
+            case "lockerID23":
+                this.touchDisplayAdminLocker7.setFill(Color.RED);
+                break;
+            case "lockerID20":
+            case "lockerID24":
+                this.touchDisplayAdminLocker8.setFill(Color.RED);
+                break;
+            case "lockerID11":
+            case "lockerID15":
+                this.touchDisplayAdminLocker9.setFill(Color.RED);
+                break;
+            case "lockerID12":
+            case "lockerID16":
+                this.touchDisplayAdminLocker10.setFill(Color.RED);
+                break;
+            case "lockerID3":
+            case "lockerID7":
+                this.touchDisplayAdminLocker11.setFill(Color.RED);
+                break;
+            case "lockerID4":
+            case "lockerID8":
+                this.touchDisplayAdminLocker12.setFill(Color.RED);
+                break;
+            default:
+                break;
+        }
+    }
+
 
 } // TouchDisplayEmulatorController

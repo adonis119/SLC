@@ -11,7 +11,7 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // TouchDisplayHandler
     public TouchDisplayHandler(String id, AppKickstarter appKickstarter) throws Exception {
-	super(id, appKickstarter);
+        super(id, appKickstarter);
     } // TouchDisplayHandler
 
 
@@ -46,21 +46,29 @@ public class TouchDisplayHandler extends HWHandler {
                 handleWrongPasscode(msg);
                 break;
             case SLS_ReplyOpenLocker:
-                log.info("Handler show which locker has opened :"+msg.getDetails());
+                log.info("Handler show which locker has opened :" + msg.getDetails());
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Store");
                 break;
             case TD_PassCodeOpenLocker:
-                log.info("Handler show which locker has opened :"+msg.getDetails());
+                log.info("Handler show which locker has opened :" + msg.getDetails());
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Pick");
                 break;
             case TD_OctopusPage:
-                log.info("Handler show which Octopus is called :"+msg.getDetails());
+                log.info("Handler show which Octopus is called :" + msg.getDetails());
                 handleUpdateOctopusDisplay(msg.getDetails());
                 break;
             case TD_UpdateAdminPage:
                 log.info("Handler update admin status");
+                handleAdminPageGetLockerStatus();
+                break;
+            case Locker_st:
+                // Check locker status 1by1 request by admin page
+                slc.send(new Msg(id, mbox, Msg.Type.Locker_st, msg.getDetails()));
+                break;
+            case Locker_st_c:
+                handleUpdateAdminLockerStatus(msg);
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -71,7 +79,7 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // handleUpdateDisplay
     protected void handleUpdateDisplay(Msg msg) {
-	log.info(id + ": update display -- " + msg.getDetails());
+        log.info(id + ": update display -- " + msg.getDetails());
     } // handleUpdateDisplay
 
 
@@ -81,30 +89,45 @@ public class TouchDisplayHandler extends HWHandler {
         log.info(id + ": Handle Poll");
     } // handlePoll
 
-    protected void handleUpdatePasscodeInput(Msg msg){
+    protected void handleUpdatePasscodeInput(Msg msg) {
         log.info(id + ": update passcode input -- " + msg.getDetails());
     }// Handle update passcode input box value when user click the number on the display screen
-    protected void handleUpdateBarcodeInput(Msg msg){
+
+    protected void handleUpdateBarcodeInput(Msg msg) {
         log.info(id + ": update barcode input -- " + msg.getDetails());
     }// Handle update barcode input when SLC send Barcode to TD
-    protected void handleUpdateServerReply(Msg msg){
+
+    protected void handleUpdateServerReply(Msg msg) {
         log.info(id + ": Server reply:  " + msg.getDetails());
     }
 
     protected void handleWrongPasscode(Msg msg) {
         log.info(id + ": passcode is wrong and show on the display. Display: " + msg.getDetails());
     }
-    protected void handleUpdateOpenLockerDoorDisplay(Msg msg){
+
+    protected void handleUpdateOpenLockerDoorDisplay(Msg msg) {
         log.info(id + ": update opened locker door:  " + msg.getDetails());
     }
-    protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick){
+
+    protected void handleUpdateOpenLockerDoorTitleDetail(String storeOrPick) {
         log.info(id + ": update opened locker door title type:  " + storeOrPick);
     }
-    protected void handleShowPaymentError(Msg msg){
+
+    protected void handleShowPaymentError(Msg msg) {
         log.info(id + ": update payment error and show  " + msg.getDetails());
     }
-    protected void handleUpdateOctopusDisplay(String amount){
+
+    protected void handleUpdateOctopusDisplay(String amount) {
         log.info(id + ": update Octopus page:  " + amount);
+    }
+
+
+    protected void handleUpdateAdminLockerStatus(Msg msg) {
+        log.info(id + ": update admin page locker state" + msg.getDetails());
+    }
+
+    protected void handleAdminPageGetLockerStatus() {
+        log.info(id + ": get admin page locker status");
     }
 
 } // TouchDisplayHandler
