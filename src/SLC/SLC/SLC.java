@@ -141,6 +141,8 @@ public class SLC extends AppThread {
                             break;
                     }
                     if (msg.getDetails().equals("3") && lockerId.isEmpty()) {
+                        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SLS_ReplyDeliveryOrderForGui,
+                                " This barcode is available But there are no empty locker."));
                         log.warning("The locker is full! There are not locker for you.");
                     } else if (lockerId.isEmpty()) {
                         log.info("Locker size " + msg.getDetails() + " is full. Try next size.");
@@ -216,6 +218,11 @@ public class SLC extends AppThread {
                         sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_SendPasscodeData,deliveryOrderIDWithPasscode));
                     } else {
                         lockers[lockerIndex].emptyStatus = 0;
+                    }
+                    lockers[lockerIndex].doorStatus = 0;
+                    if(lockers[lockerIndex].doorStatus == 0 && lockers[lockerIndex].emptyStatus == 0){
+                        lockers[lockerIndex].passCode = "";
+                        lockers[lockerIndex].deliveryOrderID = "";
                     }
                     //lockerMBox.send(msg);
                     break;
@@ -480,11 +487,10 @@ public class SLC extends AppThread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                log.info("The passcode is not correct");
                 return;
             }
         }
+        log.info("The passcode is not correct");
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.passCode_wrong, "The passcode is not correct"));
     }
 
@@ -500,11 +506,11 @@ public class SLC extends AppThread {
             e.printStackTrace();
         }
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_PassCodeOpenLocker, currentLocker.lockerID));
-        currentLocker.doorStatus = 1;
+        currentLocker.doorStatus = 0;
     }
 
     private class locker {
-        int doorStatus = 0; //0: the door is closed. 1: the door is closed.
+        int doorStatus = 0; //0: the door is closed. 1: the door is opened.
         int emptyStatus = 0; //0: the locker is empty. 1: the locker is not empty.
         String lockerID;
         String passCode = ""; // after put the product to locker, the locker should generate the passcode of the product.
@@ -517,4 +523,20 @@ public class SLC extends AppThread {
         }
     }
 
+    void print(){
+        int index =0;
+        for (locker t:
+        lockers) {
+            System.out.println("===========================================================");
+            System.out.println("index : "+index);
+            System.out.println("lockerID : "+t.lockerID);
+            System.out.println("passCode : "+t.passCode);
+            System.out.println("deliveryOrderID : "+t.deliveryOrderID);
+            System.out.println("doorStatus: : "+t.doorStatus);
+            System.out.println("emptyStatus : "+t.emptyStatus);
+            System.out.println("=============================================================");
+            index++;
+        }
+
+    }
 } // SLC
