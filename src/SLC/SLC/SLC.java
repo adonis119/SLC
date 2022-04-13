@@ -438,6 +438,7 @@ public class SLC extends AppThread {
             if (!t.passCode.isEmpty()&&t.passCode.equals(passcodeInput)) {
                 allPassCode.remove(t.lockerID);
                 this.currentLocker = t;
+                octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoActive, ""));
                 sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, t.deliveryOrderID));
                 log.info("Waiting for payment");
                 return;
@@ -448,6 +449,7 @@ public class SLC extends AppThread {
     }
 
     private void completePayment() {
+        octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoStandby, ""));
         sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, currentLocker.lockerID));
         lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, currentLocker.lockerID));
         // After choose a locker to store that delivery, display a screen show which locker is open
