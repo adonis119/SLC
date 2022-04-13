@@ -163,4 +163,14 @@ Smart Locker Controlling System
     Step 2: You can use demo data(3 buttons)/input by yourself
     Step 3: Click create..... button
     After it, if the barcode(without-) is equal order ID, SLC will let you store on a locker
+    
+## Health Poll
+    If some device respon NAK to the SLC of the Poll respon
+    SLC will trunoff some related function of the smalllocker
+    If Barcode reader NAK
+    SLC- store delivery will be disable, the touch screen will show maintance when user direct to store delivery on menu
+    If Octopus reader NAK
+    SLC- pick up delivery will be disalbe the touch screen will show maintance when user direct to pick up delivery on menu
+    If Locker/TouchDisplay NAK
+    SLC- all function on touch display will become maintance since locker and display related to all functions.
 
