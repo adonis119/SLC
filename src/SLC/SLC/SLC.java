@@ -317,13 +317,13 @@ public class SLC extends AppThread {
                 log.info("Clicked on MainMenu");
                 // Click on Pick up x= 0~300(left=0,width=300), y= 270~340(bottom=140, height=70)
                 if (clickedPositionX >= 0 && clickedPositionX <= 300 && clickedPositionY >= 270 && clickedPositionY <= 340) {
-                    if (barcodeHealth.equals("ACK") && lockerHealth.equals("ACK")) {
+                    if (lockerHealth.equals("ACK")&&octopusReaderHealth.equals("ACK")) {
                         log.info("Clicked Pick up delivery");
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
-                    } else if (barcodeHealth.equals("NAK") || lockerHealth.equals("NAK")) {
-                        //octopusReaderMBox.send(new Msg(id, mbox, Msg.Type., ""));
+                    } else if (octopusReaderHealth.equals("NAK")||lockerHealth.equals("NAK")) {
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "Maintenance"));
                     }
+
                 } else if (clickedPositionX >= 340 && clickedPositionX <= 640 && clickedPositionY >= 270 && clickedPositionY <= 340) {
                     // Click on Pick up x= 340~640(right=0,width=300), y= 270~340(bottom=140, height=70)
                     log.info("Clicked Store delivery");
