@@ -18,7 +18,7 @@
             <children>
                 <Text text="Octopus Payment" AnchorPane.topAnchor="40" AnchorPane.leftAnchor="240" style="-fx-font: 28 arial"/>
                 <Text text="Delivery Fee: $" AnchorPane.topAnchor="120" AnchorPane.leftAnchor="122" style="-fx-font: 18 arial" fill="black"/>
-                <Text fx:id="touchDisplayPaymentFee" text="50.00" AnchorPane.topAnchor="120" AnchorPane.leftAnchor="260" style="-fx-font: 18 arial" fill="Red"/>
+                <Text fx:id="touchDisplayOctopusAmountText" AnchorPane.topAnchor="120" AnchorPane.leftAnchor="260" style="-fx-font: 18 arial" fill="Red"/>
                 <Text fx:id="touchDisplayPaymentError" text="Your amount of octopus card is not enough!" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="122" style="-fx-font: 18 arial" fill="Red" opacity="0"/>
                 <Text fx:id="touchDisplayPaymentError2" text="Please back to main page, Thank you!" AnchorPane.topAnchor="300" AnchorPane.leftAnchor="122" style="-fx-font: 18 arial" fill="Red" opacity="0"/>
                 <Text text="Please touch your octopus card on octopus reader " AnchorPane.topAnchor="180" AnchorPane.leftAnchor="122" style="-fx-font: 18 arial" fill="RED"/>

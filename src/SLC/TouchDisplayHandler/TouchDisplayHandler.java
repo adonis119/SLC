@@ -55,6 +55,10 @@ public class TouchDisplayHandler extends HWHandler {
                 handleUpdateOpenLockerDoorDisplay(msg);
                 handleUpdateOpenLockerDoorTitleDetail("Pick");
                 break;
+            case TD_OctopusPage:
+                log.info("Handler show which Octopus is called :"+msg.getDetails());
+                handleUpdateOctopusDisplay(msg.getDetails());
+                break;
             case TD_UpdateAdminPage:
                 log.info("Handler update admin status");
                 break;
@@ -99,4 +103,8 @@ public class TouchDisplayHandler extends HWHandler {
     protected void handleShowPaymentError(Msg msg){
         log.info(id + ": update payment error and show  " + msg.getDetails());
     }
+    protected void handleUpdateOctopusDisplay(String amount){
+        log.info(id + ": update Octopus page:  " + amount);
+    }
+
 } // TouchDisplayHandler

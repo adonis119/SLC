@@ -114,8 +114,7 @@ public class Msg {
         /** Locker status is opened*/		Locker_st_o,
         /** PassCode is not correct, show to user */ passCode_wrong,
         /** When passcode is correct, call to open correspond door*/ TD_PassCodeOpenLocker,
-        /** SLServer create an order */         SLS_CreateDeliveryOrder,
-        /** SLServer create an order */         SLS_ReplyDeliveryOrderFor,
         /** Update the admin lockers status*/ TD_UpdateAdminPage,
+        /** When Octopus function is called, call to open correspond page*/ TD_OctopusPage,
     } // Type
 } // Msg
