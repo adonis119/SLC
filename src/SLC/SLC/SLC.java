@@ -152,6 +152,7 @@ public class SLC extends AppThread {
                         currentBarCode = "";
                         // After choose a locker to store that delivery, display a screen show which locker is open
                         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+                        barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.BR_GoStandby, ""));
                         try {
                             Thread.sleep(100);
                         } catch (InterruptedException e) {
@@ -495,12 +496,15 @@ public class SLC extends AppThread {
 
     private void completePayment(Boolean isPay) {
         if(true){
+            //set octopus device to standby since the payment flow is finish
             octopusReaderMBox.send(new Msg(id, mbox, Msg.Type.OR_GoStandby, ""));
             sLServerMbox.send(new Msg(id, mbox, Msg.Type.SLS_RequestAmount, currentLocker.lockerID));
         }
         lockerMBox.send(new Msg(id, mbox, Msg.Type.OpenLocker, currentLocker.lockerID));
         // After choose a locker to store that delivery, display a screen show which locker is open
         touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.TD_UpdateDisplay, "OpenLockerDoor"));
+
+
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
